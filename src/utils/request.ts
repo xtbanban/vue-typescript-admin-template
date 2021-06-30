@@ -35,7 +35,7 @@ service.interceptors.response.use(
     const res = response.data
     if (res.code !== 20000) {
       Message({
-        message: res.message || 'Error',
+        message: res.message || 'Error code:' + res.code + '-' + res.msg,
         type: 'error',
         duration: 5 * 1000
       })
@@ -55,7 +55,7 @@ service.interceptors.response.use(
       }
       return Promise.reject(new Error(res.message || 'Error'))
     } else {
-      return response.data
+      return response.data 
     }
   },
   (error) => {
