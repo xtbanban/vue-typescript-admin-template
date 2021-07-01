@@ -10,9 +10,9 @@ const service = axios.create({
 // Request interceptors
 service.interceptors.request.use(
   (config) => {
-    // Add X-Access-Token header to every request, you can add other custom headers here
+    // Add Authorization header to every request, you can add other custom headers here
     if (UserModule.token) {
-      config.headers['X-Access-Token'] = UserModule.token
+      config.headers['Authorization'] = 'Bearer ' + UserModule.token
     }
     return config
   },
@@ -35,7 +35,7 @@ service.interceptors.response.use(
     const res = response.data
     if (res.code !== 20000) {
       Message({
-        message: res.message || 'Error code:' + res.code + '-' + res.msg,
+        message: res.msg || 'Error',
         type: 'error',
         duration: 5 * 1000
       })
@@ -53,7 +53,7 @@ service.interceptors.response.use(
           location.reload() // To prevent bugs from vue-router
         })
       }
-      return Promise.reject(new Error(res.message || 'Error'))
+      return Promise.reject(new Error(res.msg || 'Error'))
     } else {
       return response.data 
     }
