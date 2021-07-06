@@ -59,12 +59,12 @@
         Sign in
       </el-button>
 
-      <div style="position:relative">
+      <!-- <div style="position:relative">
         <div class="tips">
           <span> username: admin </span>
           <span> password: any </span>
         </div>
-      </div>
+      </div> -->
     </el-form>
   </div>
 </template>
@@ -99,7 +99,7 @@ export default class extends Vue {
 
   private loginForm = {
     username: 'admin',
-    password: '111111'
+    password: 'radius-2021'
   }
 
   private loginRules = {
@@ -147,15 +147,15 @@ export default class extends Vue {
     (this.$refs.loginForm as ElForm).validate(async(valid: boolean) => {
       if (valid) {
         this.loading = true
+        // Just to simulate the time of the request
+        setTimeout(() => {
+          this.loading = false
+        }, 0.5 * 1000)
         await UserModule.Login(this.loginForm)
         this.$router.push({
           path: this.redirect || '/',
           query: this.otherQuery
         })
-        // Just to simulate the time of the request
-        setTimeout(() => {
-          this.loading = false
-        }, 0.5 * 1000)
       } else {
         return false
       }
