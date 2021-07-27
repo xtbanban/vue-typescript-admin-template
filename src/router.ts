@@ -51,6 +51,21 @@ export default new Router({
       ]
     },
     {
+      path: '/logging',
+      component: Layout,
+      redirect: '/logging/list',
+      children: [
+        {
+          path: 'list',
+          component: () => import(/* webpackChunkName: "table" */ '@/views/table/index.vue'),
+          meta: {
+            title: 'Table-logging',
+            icon: 'table'
+          }
+        }
+      ]
+    },
+    {
       path: '/example',
       component: Layout,
       redirect: '/example/tree',

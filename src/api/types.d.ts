@@ -1,17 +1,9 @@
 export interface IArticleData {
-  id: number
+  _id: string
+  Login: string
+  SWIP: string
+  acc_code: string
+  resp_code: string
   status: string
-  title: string
-  abstractContent: string
-  fullContent: string
-  sourceURL: string
-  imageURL: string
-  timestamp: string | number
-  platforms: string[]
-  disableComment: boolean
-  importance: number
-  author: string
-  reviewer: string
-  type: string
-  pageviews: number
+  logtime: string
 }

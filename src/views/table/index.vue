@@ -11,43 +11,57 @@
       <el-table-column
         align="center"
         label="ID"
-        width="95"
+        width="55"
       >
         <template slot-scope="scope">
           {{ scope.$index }}
         </template>
       </el-table-column>
-      <el-table-column label="Title">
-        <template slot-scope="scope">
-          {{ scope.row.title }}
-        </template>
-      </el-table-column>
-      <el-table-column
-        label="Author"
-        width="180"
+      <el-table-column 
+        label="Login"
+        width="120"
         align="center"
       >
         <template slot-scope="scope">
-          <span>{{ scope.row.author }}</span>
+          {{ scope.row.Login }}
         </template>
       </el-table-column>
       <el-table-column
-        label="Pageviews"
-        width="110"
+        label="SWIP"
+        width="160"
         align="center"
       >
         <template slot-scope="scope">
-          {{ scope.row.pageviews }}
+          <span>{{ scope.row.SWIP }}</span>
+        </template>
+      </el-table-column>
+      <el-table-column
+        label="acc_code"
+        width="160"
+        align="center"
+      >
+        <template slot-scope="scope">
+          {{ scope.row.acc_code }}
+        </template>
+      </el-table-column>
+      <el-table-column
+        label="resp_code"
+        width="160"
+        align="center"
+      >
+        <template slot-scope="scope">
+          {{ scope.row.resp_code }}
         </template>
       </el-table-column>
       <el-table-column
         class-name="status-col"
         label="Status"
-        width="110"
+        width="150"
         align="center"
       >
         <template slot-scope="scope">
-          <el-tag :type="scope.row.status | statusFilter">
+          <el-tag :type="scope.row.status === 'Start' ? 'primary' : (scope.row.status === 'Stop' ? 'gray' : 'success')">
+            <!-- <el-tag :type="scope.row.status | statusFilter"> -->
             {{ scope.row.status }}
           </el-tag>
         </template>
@@ -55,12 +69,12 @@
       <el-table-column
         align="center"
         prop="created_at"
-        label="Created at"
+        label="logtime"
         width="250"
       >
         <template slot-scope="scope">
           <i class="el-icon-time" />
-          <span>{{ scope.row.timestamp | parseTime }}</span>
+          <span>{{ scope.row.logtime | parseTime }}</span>
         </template>
       </el-table-column>
     </el-table>
@@ -77,9 +91,9 @@ import { IArticleData } from '@/api/types'
   filters: {
     statusFilter: (status: string) => {
       const statusMap: { [key: string]: string } = {
-        published: 'success',
-        draft: 'gray',
-        deleted: 'danger'
+        start: 'success',
+        'Interim-Update': 'gray',
+        stop: 'danger'
       }
       return statusMap[status]
     },
@@ -102,8 +116,10 @@ export default class extends Vue {
 
   private async getList() {
     this.listLoading = true
+    console.log('getlist:', this.listLoading)
     const { data } = await getArticles(this.listQuery)
     this.list = data.items
+    console.log('data:', data)
     // Just to simulate the time of the request
     setTimeout(() => {
       this.listLoading = false
