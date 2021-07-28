@@ -60,8 +60,7 @@
         align="center"
       >
         <template slot-scope="scope">
-          <el-tag :type="scope.row.status === 'Start' ? 'primary' : (scope.row.status === 'Stop' ? 'gray' : 'success')">
-            <!-- <el-tag :type="scope.row.status | statusFilter"> -->
+            <el-tag :type="scope.row.status | statusFilter">
             {{ scope.row.status }}
           </el-tag>
         </template>
@@ -70,11 +69,12 @@
         align="center"
         prop="created_at"
         label="logtime"
-        width="250"
+        width="200"
       >
         <template slot-scope="scope">
           <i class="el-icon-time" />
-          <span>{{ scope.row.logtime | parseTime }}</span>
+          <span>{{ scope.row.logtime }}</span>
+          <!-- <span>{{ scope.row.logtime | parseTime }}</span> -->
         </template>
       </el-table-column>
     </el-table>
@@ -91,15 +91,15 @@ import { IArticleData } from '@/api/types'
   filters: {
     statusFilter: (status: string) => {
       const statusMap: { [key: string]: string } = {
-        start: 'success',
-        'Interim-Update': 'gray',
-        stop: 'danger'
+        Start: 'success',
+        'Interim-Update': '',
+        Stop: 'danger'
       }
       return statusMap[status]
-    },
-    parseTime: (timestamp: string) => {
-      return new Date(timestamp).toISOString()
     }
+    // parseTime: (timestamp: string) => {
+    //   return new Date(timestamp).toISOString()
+    // }
   }
 })
 export default class extends Vue {

@@ -4,5 +4,5 @@ export const getArticles = (params: any) =>
   request({
     url: '/logging/list',
     method: 'post',
-    //params
+    params
   })
