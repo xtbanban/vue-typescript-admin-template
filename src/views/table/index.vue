@@ -1,5 +1,29 @@
 <template>
   <div class="app-container">
+    <div class="filter-container">
+      <el-select
+        v-model="ClientList"
+        style="width: 140px"
+        class="filter-item"
+        @change="handleFilter"
+      >
+        <el-option
+          v-for="item in ClientList"
+          :key="item.key"
+          :label="item.label"
+          :value="item.key"
+        />
+      </el-select>
+      <el-button
+        v-waves
+        class="filter-item"
+        type="primary"
+        icon="el-icon-search"
+        @click="handleFilter"
+      >
+        显示
+      </el-button>
+    </div>
     <div class="block">
       <el-pagination
        @current-change="handleCurrentChange"
@@ -8,7 +32,6 @@
         :current-page="currentpage"
         :total="total">
       </el-pagination>
-      <span>{{ pageshow1 }}</span>
     </div>
     <el-table
       v-loading="listLoading"
@@ -42,7 +65,7 @@
         align="center"
       >
         <template slot-scope="scope">
-          <span>{{ scope.row.SWIP }}</span>
+          {{ scope.row.SWIP }}
         </template>
       </el-table-column>
       <el-table-column
@@ -65,7 +88,7 @@
       </el-table-column>
       <el-table-column
         class-name="status-col"
-        label="状态"
+        label="动作"
         width="150"
         align="center"
       >
@@ -83,7 +106,7 @@
       >
         <template slot-scope="scope">
           <i class="el-icon-time" />
-          <span>{{ scope.row.logtime }}</span>
+          {{ scope.row.logtime }}
           <!-- <span>{{ scope.row.logtime | parseTime }}</span> -->
         </template>
       </el-table-column>
@@ -131,6 +154,7 @@ export default class extends Vue {
     page: this.currentpage,
     limit: this.pagesize
   }
+  private ClientList = ['c40938f6d1c6', 'c40938f6d1c7']
 
   created() {
     this.getList()

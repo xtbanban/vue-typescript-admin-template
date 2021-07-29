@@ -2,8 +2,8 @@ export interface ILoggingData {
   _id: string
   Login: string
   SWIP: string
-  acc_code: string
-  resp_code: string
+  'acc_code': string
+  'resp_code': string
   status: string
   logtime: string
 }
@@ -21,8 +21,8 @@ export interface IDeviceData {
   _id: string
   IP: string
   Secert: string
-  AutoInsert: number
-  AutoAccept: number
+  AutoInsert: string
+  AutoAccept: string
   name: string
   group: string
   status: string
