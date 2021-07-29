@@ -58,7 +58,7 @@ export default new Router({
           path: 'list',
           component: () => import(/* webpackChunkName: "table" */ '@/views/table/index.vue'),
           meta: {
-            title: '日志',
+            title: '计费情况',
             icon: 'table'
           }
         }
