@@ -63,16 +63,16 @@ class User extends VuexModule implements IUserState {
   @Action
   public async GetUserInfo() {
     if (this.token === '') {
-      throw Error('GetUserInfo: token is undefined!')
+      throw Error('GetUserInfo: token未定义!')
     }
     const { data } = await getUserInfo({ /* Your params here */ })
     if (!data) {
-      throw Error('Verification failed, please Login again.')
+      throw Error('验证失败，请重新登录。')
     }
     const { roles, name, avatar, introduction } = data.user
     // roles must be a non-empty array
     if (!roles || roles.length <= 0) {
-      throw Error('GetUserInfo: roles must be a non-null array!')
+      throw Error('GetUserInfo: roles必须为非空数组!')
     }
     this.SET_ROLES(roles)
     this.SET_NAME(name)
@@ -83,7 +83,7 @@ class User extends VuexModule implements IUserState {
   @Action
   public async LogOut() {
     if (this.token === '') {
-      throw Error('LogOut: token is undefined!')
+      throw Error('LogOut: token未定义!')
     }
     await logout()
     removeToken()

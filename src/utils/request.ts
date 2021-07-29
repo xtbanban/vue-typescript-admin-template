@@ -41,11 +41,11 @@ service.interceptors.response.use(
       })
       if (res.code === 50008 || res.code === 50012 || res.code === 50014) {
         MessageBox.confirm(
-          'You have been logged out, try to login again.',
-          'Log out',
+          '已退出系统，请重新登录。',
+          '退出',
           {
-            confirmButtonText: 'Relogin',
-            cancelButtonText: 'Cancel',
+            confirmButtonText: '登录',
+            cancelButtonText: '取消',
             type: 'warning'
           }
         ).then(() => {

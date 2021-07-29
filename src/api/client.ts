@@ -1,8 +1,8 @@
 import request from '@/utils/request'
 
-export const getArticles = (params: any) =>
+export const getclient = (params: any) =>
   request({
-    url: '/logging/list',
+    url: '/client/list',
     method: 'post',
     params
   })

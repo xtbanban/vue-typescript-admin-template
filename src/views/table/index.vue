@@ -13,14 +13,14 @@
     <el-table
       v-loading="listLoading"
       :data="list"
-      element-loading-text="Loading"
+      element-loading-text="正在载入..."
       border
       fit
       highlight-current-row
     >
       <el-table-column
         align="center"
-        label="ID"
+        label="顺序"
         width="55"
       >
         <template slot-scope="scope">
@@ -28,7 +28,7 @@
         </template>
       </el-table-column>
       <el-table-column
-        label="Login"
+        label="用户"
         width="120"
         align="center"
       >
@@ -37,7 +37,7 @@
         </template>
       </el-table-column>
       <el-table-column
-        label="SWIP"
+        label="交换机"
         width="160"
         align="center"
       >
@@ -46,7 +46,7 @@
         </template>
       </el-table-column>
       <el-table-column
-        label="acc_code"
+        label="请求码"
         width="160"
         align="center"
       >
@@ -55,7 +55,7 @@
         </template>
       </el-table-column>
       <el-table-column
-        label="resp_code"
+        label="响应码"
         width="170"
         align="center"
       >
@@ -65,7 +65,7 @@
       </el-table-column>
       <el-table-column
         class-name="status-col"
-        label="Status"
+        label="状态"
         width="150"
         align="center"
       >
@@ -78,7 +78,7 @@
       <el-table-column
         align="center"
         prop="created_at"
-        label="logtime"
+        label="时刻"
         width="200"
       >
         <template slot-scope="scope">
@@ -101,9 +101,9 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue, Watch } from 'vue-property-decorator'
-import { getArticles } from '@/api/articles'
-import { IArticleData } from '@/api/types'
+import { Component, Vue } from 'vue-property-decorator'
+import { getLogging } from '@/api/logging'
+import { ILoggingData } from '@/api/types'
 
 @Component({
   name: 'Table',
@@ -122,7 +122,7 @@ import { IArticleData } from '@/api/types'
   }
 })
 export default class extends Vue {
-  private list: IArticleData[] = []
+  private list: ILoggingData[] = []
   private pagesize = 20
   private currentpage = 1
   private total = 0
@@ -144,7 +144,7 @@ export default class extends Vue {
 
   private async getList() {
     this.listLoading = true
-    const { data } = await getArticles(this.listQuery)
+    const { data } = await getLogging(this.listQuery)
     this.list = data.items
     this.total = data.total
     // Just to simulate the time of the request
