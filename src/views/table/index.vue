@@ -11,7 +11,7 @@
           v-for="item in ClientList"
           :key="item.key"
           :label="item.label"
-          :value="item.key"
+          :value="item.name"
         />
       </el-select>
       <el-button
@@ -154,7 +154,7 @@ export default class extends Vue {
     page: this.currentpage,
     limit: this.pagesize
   }
-  private ClientList = ['c40938f6d1c6', 'c40938f6d1c7']
+  private ClientList = {label:'c40938f6d1c6', name:'c40938f6d1c7'}
 
   created() {
     this.getList()

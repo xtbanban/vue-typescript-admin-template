@@ -1,56 +1,6 @@
 <template>
   <div class="app-container">
     <div class="filter-container">
-      <!-- <el-select
-        v-model="listQuery.importance"
-        :placeholder="$t('table.importance')"
-        clearable
-        style="width: 120px"
-        class="filter-item"
-      >
-        <el-option
-          v-for="item in importanceOptions"
-          :key="item"
-          :label="item"
-          :value="item"
-        />
-      </el-select>
-      <el-select
-        v-model="listQuery.type"
-        :placeholder="$t('table.type')"
-        clearable
-        class="filter-item"
-        style="width: 130px"
-      >
-        <el-option
-          v-for="item in calendarTypeOptions"
-          :key="item.key"
-          :label="item.displayName+'('+item.key+')'"
-          :value="item.key"
-        />
-      </el-select>
-      <el-select
-        v-model="listQuery.sort"
-        style="width: 140px"
-        class="filter-item"
-        @change="handleFilter"
-      >
-        <el-option
-          v-for="item in sortOptions"
-          :key="item.key"
-          :label="item.label"
-          :value="item.key"
-        />
-      </el-select> -->
-      <el-button
-        v-waves
-        class="filter-item"
-        type="primary"
-        icon="el-icon-search"
-        @click="handleFilter"
-      >
-        显示
-      </el-button>
       <el-button
         class="filter-item"
         style="margin-left: 10px;"
@@ -89,11 +39,29 @@
       </el-table-column>
       <el-table-column
         label="IP地址"
+        width="140"
+        align="center"
+      >
+        <template slot-scope="scope">
+          {{ scope.row.IP }}
+        </template>
+      </el-table-column>
+      <el-table-column
+        label="名称"
         width="120"
         align="center"
       >
         <template slot-scope="scope">
-          <span>{{ scope.row.IP }}</span>
+          {{ scope.row.name }}
+        </template>
+      </el-table-column>
+      <el-table-column
+        label="分组"
+        width="120"
+        align="center"
+      >
+      <template slot-scope="scope">
+          {{ scope.row.group }}
         </template>
       </el-table-column>
       <el-table-column
@@ -107,16 +75,16 @@
       </el-table-column>
       <el-table-column
         label="自动增加"
-        width="120"
+        width="100"
         align="center"
       >
         <template slot-scope="scope">
-          <span>{{ scope.row.AutoInsert }}</span>
+          {{ scope.row.AutoInsert }}
         </template>
       </el-table-column>
       <el-table-column
         label="自动接入"
-        width="120"
+        width="100"
         align="center"
       >
         <template slot-scope="scope">
@@ -125,29 +93,11 @@
       </el-table-column>
       <el-table-column
         label="状态"
-        width="120"
+        width="100"
         align="center"
       >
         <template slot-scope="scope">
-          <span>{{ scope.row.status }}</span>
-        </template>
-      </el-table-column>
-      <el-table-column
-        label="名称"
-        width="120"
-        align="center"
-      >
-        <template slot-scope="scope">
-          <span>{{ scope.row.name }}</span>
-        </template>
-      </el-table-column>
-      <el-table-column
-        label="分组"
-        width="120"
-        align="center"
-      >
-      <template slot-scope="scope">
-          <span>{{ scope.row.group }}</span>
+          {{ scope.row.status }}
         </template>
       </el-table-column>
       <el-table-column
@@ -165,10 +115,9 @@
             编辑
           </el-button>
           <el-button
-            v-if="scopt.row.status !== 0"
             size="mini"
             type="danger"
-            @click="handleDelete(scopt.row._id, $index)"
+            @click="handleDelete(scopt.row._id)"
           >
             删除
           </el-button>
