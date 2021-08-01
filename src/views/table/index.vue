@@ -92,7 +92,7 @@
         align="center"
       >
         <template slot-scope="scope">
-            <el-tag :type="scope.row.status | statusFilter">
+          <el-tag :type="scope.row.status | statusFilter">
             {{ scope.row.status }}
           </el-tag>
         </template>

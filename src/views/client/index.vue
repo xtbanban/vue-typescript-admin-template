@@ -67,24 +67,15 @@
       </el-table-column>
       <el-table-column
         label="真实用户名"
-        width="160"
+        width="260"
         align="center"
       >
       <template slot-scope="scope">
         <template v-if="scope.row.edit">
             <el-input
               v-model="scope.row.UserName"
-              class="edit-input"
               size="small"
             />
-            <el-button
-              class="cancel-btn"
-              size="small"
-              type="warning"
-              @click="cancelEdit(scope.row)"
-            >
-              取消
-            </el-button>
           </template>
           <span v-else>{{ scope.row.UserName }}</span>
         </template>
@@ -104,18 +95,26 @@
         align="center"
       >
         <template slot-scope="scope">
-          {{ scope.row.status }}
+          <template v-if="scope.row.edit">
+            <el-tag :type="(scope.row.status) ? 'success' : 'danger'">
+              {{ (scope.row.status) ? '正常' : '拒绝' }}
+            </el-tag>
+          </template>
+          <template v-else>
+            <el-switch v-model="scope.row.status" active-color="#13ce66" inactive-color="#ff4949" >
+            </el-switch>
+          </template>
         </template>
       </el-table-column>
       <el-table-column
         label="操作"
         align="center"
-        width="230"
+        width="200"
         class-name="fixed-width"
       >
         <template slot-scope="scope">
+          <div v-if="scope.row.edit">
           <el-button
-            v-if="scope.row.edit"
             type="success"
             size="small"
             @click="confirmEdit(scope.row)"
@@ -123,7 +122,15 @@
             保存
           </el-button>
           <el-button
-            v-else
+              size="small"
+              type="warning"
+              @click="cancelEdit(scope.row)"
+            >
+              取消
+          </el-button>
+          </div>
+          <div v-else>
+          <el-button
             type="primary"
             size="small"
             @click="scope.row.edit=!scope.row.edit"
@@ -137,6 +144,7 @@
           >
             删除
           </el-button>
+          </div>
         </template>
       </el-table-column>
     </el-table>
@@ -155,7 +163,7 @@
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
 import { Form } from 'element-ui'
-import { getclient, addclient, deleteclient } from '@/api/client'
+import { getclient, addclient, updateclient, deleteclient } from '@/api/client'
 import { IClientData } from '@/api/types'
 
 @Component({
@@ -191,11 +199,9 @@ export default class extends Vue {
       if (valid) {
         await addclient(this.formInline)
         this.getList()
-        this.$notify({
-          title: '成功',
-          message: '增加成功',
-          type: 'success',
-          duration: 2000
+        this.$message({
+          message: '成功增加接入用户。',
+          type: 'success'
         })
       }
     })
@@ -229,7 +235,13 @@ export default class extends Vue {
   private async getList() {
     this.listLoading = true
     const { data } = await getclient(this.listQuery)
-    this.list = data.items
+    // this.list = data.items
+    const items = data.items
+    this.list = items.map((v: any) => {
+      this.$set(v, 'edit', false) // https://vuejs.org/v2/guide/reactivity.html
+      v.originalUserName = v.UserName
+      return v
+    })
     this.total = data.total
     // Just to simulate the time of the request
     setTimeout(() => {
@@ -240,31 +252,22 @@ export default class extends Vue {
   private cancelEdit(row: any) {
     row.UserName = row.originalUserName
     row.edit = false
-    this.$message({
-      message: '用户名称恢复回原值。',
-      type: 'warning'
-    })
+    // this.$message({
+    //   message: '用户名称恢复回原值。',
+    //   type: 'warning'
+    // })
   }
 
-  private confirmEdit(row: any) {
+  private async confirmEdit(row: any) {
     row.edit = false
     row.originalUserName = row.UserName
+    const Login = row.Login
+    const UserName = row.UserName
+    await updateclient({ Login, UserName })
     this.$message({
-      message: '用户名称可编辑。',
+      message: '用户名称已保存。',
       type: 'success'
     })
   }
 }
 </script>
-
-<style lang="scss" scoped>
-.edit-input {
-  padding-right: 100px;
-}
-
-.cancel-btn {
-  position: absolute;
-  right: 15px;
-  top: 10px;
-}
-</style>

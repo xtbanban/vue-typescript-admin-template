@@ -20,3 +20,10 @@ export const deleteclient = (data: any) =>
     method: 'post',
     data
   })
+
+export const updateclient = (data: any) =>
+  request({
+    url: '/client/update',
+    method: 'post',
+    data
+  })

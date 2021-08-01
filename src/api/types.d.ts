@@ -14,8 +14,7 @@ export interface IClientData {
   Password: string
   UserName: string
   SWIP: string
-  status: string
-  edit: boolean
+  status: boolean
 }
 
 export interface IDeviceData {
