@@ -71,7 +71,22 @@
         align="center"
       >
       <template slot-scope="scope">
-          {{ scope.row.UserName }}
+        <template v-if="scope.row.edit">
+            <el-input
+              v-model="scope.row.UserName"
+              class="edit-input"
+              size="small"
+            />
+            <el-button
+              class="cancel-btn"
+              size="small"
+              type="warning"
+              @click="cancelEdit(scope.row)"
+            >
+              取消
+            </el-button>
+          </template>
+          <span v-else>{{ scope.row.UserName }}</span>
         </template>
       </el-table-column>
       <el-table-column
@@ -100,9 +115,18 @@
       >
         <template slot-scope="scope">
           <el-button
+            v-if="scope.row.edit"
+            type="success"
+            size="small"
+            @click="confirmEdit(scope.row)"
+          >
+            保存
+          </el-button>
+          <el-button
+            v-else
             type="primary"
-            size="mini"
-            @click="handleUpdate(scope.row.Login)"
+            size="small"
+            @click="scope.row.edit=!scope.row.edit"
           >
             编辑
           </el-button>
@@ -212,5 +236,35 @@ export default class extends Vue {
       this.listLoading = false
     }, 0.5 * 1000)
   }
+
+  private cancelEdit(row: any) {
+    row.UserName = row.originalUserName
+    row.edit = false
+    this.$message({
+      message: '用户名称恢复回原值。',
+      type: 'warning'
+    })
+  }
+
+  private confirmEdit(row: any) {
+    row.edit = false
+    row.originalUserName = row.UserName
+    this.$message({
+      message: '用户名称可编辑。',
+      type: 'success'
+    })
+  }
 }
 </script>
+
+<style lang="scss" scoped>
+.edit-input {
+  padding-right: 100px;
+}
+
+.cancel-btn {
+  position: absolute;
+  right: 15px;
+  top: 10px;
+}
+</style>

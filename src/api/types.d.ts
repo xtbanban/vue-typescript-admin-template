@@ -15,6 +15,7 @@ export interface IClientData {
   UserName: string
   SWIP: string
   status: string
+  edit: boolean
 }
 
 export interface IDeviceData {
