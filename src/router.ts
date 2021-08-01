@@ -51,6 +51,20 @@ export default new Router({
       ]
     },
     {
+      path: '/client',
+      component: Layout,
+      children: [
+        {
+          path: 'list',
+          component: () => import(/* webpackChunkName: "device" */ '@/views/client/index.vue'),
+          meta: {
+            title: '接入设备',
+            icon: 'table'
+          }
+        }
+      ]
+    },
+    {
       path: '/device',
       component: Layout,
       children: [

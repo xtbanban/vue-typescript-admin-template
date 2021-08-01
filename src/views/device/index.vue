@@ -1,17 +1,28 @@
 <template>
   <div class="app-container">
-    <div class="filter-container">
-      <el-button
-        class="filter-item"
-        style="margin-left: 10px;"
-        type="primary"
-        icon="el-icon-edit"
-        @click="handleCreate"
+    <el-form
+        ref="addForm"
+        :inline="true"
+        :model="formInline"
+        class="demo-form-inline"
+        :rules="rules"
       >
-        增加
-      </el-button>
-    </div>
-    <div class="block">
+      <el-form-item label="IP地址" prop="IP">
+        <el-input v-model="formInline.IP" placeholder="IP地址"></el-input>
+      </el-form-item>
+      <el-form-item label="共享密钥" prop="Secert">
+       <el-input v-model="formInline.Secert" placeholder="共享密钥" show-password></el-input>
+      </el-form-item>
+      <el-switch v-model="formInline.AutoInsert" active-text="自动增加">
+      </el-switch>
+      <el-switch v-model="formInline.AutoAccept" active-text="自动接入">
+      </el-switch>
+      <el-form-item>
+       <el-button type="primary" @click="onaddSubmit">增加</el-button>
+      </el-form-item>
+    </el-form>
+
+    <div class="block" v-if="!(pagesize===0)">
       <el-pagination
        @current-change="handleCurrentChange"
         layout="total, prev, pager, next"
@@ -91,7 +102,7 @@
           <span>{{ scope.row.AutoAccept }}</span>
         </template>
       </el-table-column>
-      <el-table-column
+      <!-- <el-table-column
         label="状态"
         width="100"
         align="center"
@@ -99,7 +110,7 @@
         <template slot-scope="scope">
           {{ scope.row.status }}
         </template>
-      </el-table-column>
+      </el-table-column> -->
       <el-table-column
         label="操作"
         align="center"
@@ -110,21 +121,21 @@
           <el-button
             type="primary"
             size="mini"
-            @click="handleUpdate(scope.row._id)"
+            @click="handleUpdate(scope.row.IP)"
           >
             编辑
           </el-button>
           <el-button
             size="mini"
             type="danger"
-            @click="handleDelete(scopt.row._id)"
+            @click="handleDelete(scope.row.IP)"
           >
             删除
           </el-button>
         </template>
       </el-table-column>
     </el-table>
-    <div class="block">
+    <div class="block" v-if="!(pagesize===0)">
       <el-pagination
        @current-change="handleCurrentChange"
         layout="total, prev, pager, next"
@@ -133,42 +144,13 @@
         :total="total">
       </el-pagination>
     </div>
-    <el-dialog
-      :visible.sync="dialogPageviewsVisible"
-      title="增加"
-    >
-      <el-table
-        :data="pageviewsData"
-        border
-        fit
-        highlight-current-row
-        style="width: 100%"
-      >
-        <el-table-column
-          prop="key"
-          label="Channel"
-        />
-        <el-table-column
-          prop="pageviews"
-          label="Pageviews"
-        />
-      </el-table>
-      <span
-        slot="footer"
-        class="dialog-footer"
-      >
-        <el-button
-          type="primary"
-          @click="dialogPageviewsVisible = false"
-        >确定</el-button>
-      </span>
-    </el-dialog>
   </div>
 </template>
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
-import { getdevice } from '@/api/device'
+import { Form } from 'element-ui'
+import { getdevice, adddevice, deletedevice } from '@/api/device'
 import { IDeviceData } from '@/api/types'
 
 @Component({
@@ -176,13 +158,58 @@ import { IDeviceData } from '@/api/types'
 })
 export default class extends Vue {
   private list: IDeviceData[] = []
-  private pagesize = 20
+  private pagesize = 0 // 不分页
   private currentpage = 1
   private total = 0
   private listLoading = true
   private listQuery = {
     page: this.currentpage,
     limit: this.pagesize
+  }
+
+  private rules = {
+    IP: [{ required: true, message: '必须输入IP地址', trigger: 'blur' }],
+    Secert: [{ required: true, message: '必须输入共享密钥', trigger: 'blur' }]
+  }
+
+  private formInline = {
+    IP: '',
+    Secert: '',
+    AutoInsert: true,
+    AutoAccept: false,
+    status: 1,
+    name: '',
+    group: ''
+  }
+
+  private onaddSubmit() {
+    (this.$refs.addForm as Form).validate(async(valid) => {
+      if (valid) {
+        await adddevice(this.formInline)
+        this.getList()
+        this.$notify({
+          title: '成功',
+          message: '增加成功',
+          type: 'success',
+          duration: 2000
+        })
+      }
+    })
+  }
+
+  private handleDelete(IP: string) {
+    this.$confirm('此操作将永久删除该数据, 是否继续?(' + IP + ')', '提示', {
+      confirmButtonText: '确定',
+      cancelButtonText: '取消',
+      type: 'warning'
+    }).then(() => {
+      this.deldevice(IP)
+    })
+  }
+
+  private async deldevice(IP: string) {
+    await deletedevice({ IP })
+    this.getList()
   }
 
   created() {

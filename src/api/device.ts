@@ -7,9 +7,16 @@ export const getdevice = (params: any) =>
     params
   })
 
-export const adddevice = (params: any) =>
+export const adddevice = (data: any) =>
   request({
     url: '/device/add',
     method: 'post',
-    params
+    data
+  })
+
+export const deletedevice = (data: any) =>
+  request({
+    url: '/device/delete',
+    method: 'post',
+    data
   })

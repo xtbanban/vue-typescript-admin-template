@@ -2,17 +2,15 @@
   <div class="app-container">
     <div class="filter-container">
       <el-select
-        v-model="ClientList"
-        style="width: 140px"
-        class="filter-item"
-        @change="handleFilter"
-      >
+        v-model="Clientvalue" placeholder="请选择">
         <el-option
           v-for="item in ClientList"
-          :key="item.key"
+          :key="item.value"
           :label="item.label"
-          :value="item.name"
-        />
+          :value="item.name">
+          <span style="float: left">{{ item.label }}</span>
+          <span style="float: right; color: #8492a6; font-size: 13px">{{ item.name }}</span>
+        </el-option>
       </el-select>
       <el-button
         v-waves
@@ -23,6 +21,7 @@
       >
         显示
       </el-button>
+      {{ Clientvalue }}
     </div>
     <div class="block">
       <el-pagination
@@ -149,14 +148,23 @@ export default class extends Vue {
   private pagesize = 20
   private currentpage = 1
   private total = 0
-  private listLoading = true
+  private listLoading = false
   private listQuery = {
     page: this.currentpage,
     limit: this.pagesize
   }
-  private ClientList = {label:'c40938f6d1c6', name:'c40938f6d1c7'}
+  private ClientList = [
+    {label:'hehe', name:'c40938f6d1c6'},
+    {label:'wowo', name:'c40938f6d1c7'}
+  ]
+  private Clientvalue = ''
 
   created() {
+    // this.getList()
+  }
+
+  private handleFilter() {
+    this.listLoading = true
     this.getList()
   }
 
@@ -168,7 +176,7 @@ export default class extends Vue {
 
   private async getList() {
     this.listLoading = true
-    const { data } = await getLogging(this.listQuery)
+    const { data } = await getLogging(this.listQuery, { Login: this.Clientvalue })
     this.list = data.items
     this.total = data.total
     // Just to simulate the time of the request
