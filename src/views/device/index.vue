@@ -49,7 +49,7 @@
         </template>
       </el-table-column>
       <el-table-column
-        label="IP地址"
+        label="*IP地址*"
         width="140"
         align="center"
       >
@@ -59,29 +59,40 @@
       </el-table-column>
       <el-table-column
         label="名称"
-        width="120"
+        width="150"
         align="center"
       >
         <template slot-scope="scope">
-          {{ scope.row.name }}
+          <el-input
+            v-if="scope.row.edit"
+            v-model="scope.row.name"
+            size="small"
+          />
+          <span v-else>{{ scope.row.name }}</span>
         </template>
       </el-table-column>
       <el-table-column
         label="分组"
-        width="120"
+        width="150"
         align="center"
       >
       <template slot-scope="scope">
-          {{ scope.row.group }}
+        <el-input
+            v-if="scope.row.edit"
+            v-model="scope.row.group"
+            size="small"
+          />
+          <span v-else>{{ scope.row.group }}</span>
         </template>
       </el-table-column>
       <el-table-column
-        label="共享密钥"
-        width="120"
+        label="*共享密钥*"
+        width="150"
         align="center"
       >
       <template slot-scope="scope">
-          {{ scope.row.Secert }}
+          <span v-if="scope.row.edit">{{ scope.row.Secert }}</span>
+          <span v-else>{{ Showpassword }}</span>
         </template>
       </el-table-column>
       <el-table-column
@@ -90,7 +101,18 @@
         align="center"
       >
         <template slot-scope="scope">
-          {{ scope.row.AutoInsert }}
+          <el-tag
+            v-show="!scope.row.edit"
+            :type="(scope.row.AutoInsert) ? 'success' : 'danger'" 
+            disable-transitions>
+            {{ (scope.row.AutoInsert) ? '是' : '否' }}
+          </el-tag>
+          <el-switch
+            v-show="scope.row.edit"
+            v-model="scope.row.AutoInsert"
+            active-color="#13ce66"
+            inactive-color="#ff4949" >
+          </el-switch>
         </template>
       </el-table-column>
       <el-table-column
@@ -99,39 +121,59 @@
         align="center"
       >
         <template slot-scope="scope">
-          <span>{{ scope.row.AutoAccept }}</span>
+          <el-tag
+            v-show="!scope.row.edit"
+            :type="(scope.row.AutoAccept) ? 'success' : 'danger'" 
+            disable-transitions>
+            {{ (scope.row.AutoAccept) ? '是' : '否' }}
+          </el-tag>
+          <el-switch
+            v-show="scope.row.edit"
+            v-model="scope.row.AutoAccept"
+            active-color="#13ce66"
+            inactive-color="#ff4949" >
+          </el-switch>
         </template>
       </el-table-column>
-      <!-- <el-table-column
-        label="状态"
-        width="100"
-        align="center"
-      >
-        <template slot-scope="scope">
-          {{ scope.row.status }}
-        </template>
-      </el-table-column> -->
       <el-table-column
         label="操作"
         align="center"
-        width="230"
+        width="180"
         class-name="fixed-width"
       >
         <template slot-scope="scope">
-          <el-button
-            type="primary"
-            size="mini"
-            @click="handleUpdate(scope.row.IP)"
-          >
-            编辑
-          </el-button>
-          <el-button
-            size="mini"
-            type="danger"
-            @click="handleDelete(scope.row.IP)"
-          >
-            删除
-          </el-button>
+          <div v-if="scope.row.edit">
+            <el-button
+              type="success"
+              size="small"
+              @click="confirmEdit(scope.row)"
+            >
+              保存
+            </el-button>
+            <el-button
+              size="small"
+              type="warning"
+              @click="cancelEdit(scope.row)"
+            >
+              取消
+            </el-button>
+          </div>
+          <div v-else>
+            <el-button
+              type="primary"
+              size="small"
+              @click="scope.row.edit=!scope.row.edit"
+            >
+              编辑
+            </el-button>
+            <el-button
+              size="mini"
+              type="danger"
+              @click="handleDelete(scope.row.IP)"
+            >
+              删除
+            </el-button>
+          </div>
         </template>
       </el-table-column>
     </el-table>
@@ -150,13 +192,14 @@
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
 import { Form } from 'element-ui'
-import { getdevice, adddevice, deletedevice } from '@/api/device'
+import { getdevice, adddevice, updatedevice, deletedevice } from '@/api/device'
 import { IDeviceData } from '@/api/types'
 
 @Component({
   name: 'Device'
 })
 export default class extends Vue {
+  private Showpassword = '******'
   private list: IDeviceData[] = []
   private pagesize = 0 // 不分页
   private currentpage = 1
@@ -177,7 +220,7 @@ export default class extends Vue {
     Secert: '',
     AutoInsert: true,
     AutoAccept: false,
-    status: 1,
+    status: true,
     name: '',
     group: ''
   }
@@ -187,18 +230,16 @@ export default class extends Vue {
       if (valid) {
         await adddevice(this.formInline)
         this.getList()
-        this.$notify({
-          title: '成功',
-          message: '增加成功',
-          type: 'success',
-          duration: 2000
+        this.$message({
+          message: '成功增加交换机。',
+          type: 'success'
         })
       }
     })
   }
 
   private handleDelete(IP: string) {
-    this.$confirm('此操作将永久删除该数据, 是否继续?(' + IP + ')', '提示', {
+    this.$confirm('此操作将永久删除该数据, 是否继续?\n(' + IP + ')', '提示', {
       confirmButtonText: '确定',
       cancelButtonText: '取消',
       type: 'warning'
@@ -225,12 +266,46 @@ export default class extends Vue {
   private async getList() {
     this.listLoading = true
     const { data } = await getdevice(this.listQuery)
-    this.list = data.items
+    const items = data.items
+    this.list = items.map((v: any) => {
+      this.$set(v, 'edit', false)
+      v.originalAutoInsert = v.AutoInsert
+      v.originalAutoAccept = v.AutoAccept
+      v.originalname = v.name
+      v.originalgroup = v.group
+      return v
+    })
     this.total = data.total
     // Just to simulate the time of the request
     setTimeout(() => {
       this.listLoading = false
     }, 0.5 * 1000)
+  }
+
+  private cancelEdit(row: any) {
+    row.AutoInsert = row.originalAutoInsert
+    row.AutoAccept = row.originalAutoAccept
+    row.name = row.originalname
+    row.group = row.originalgroup
+    row.edit = false
+  }
+
+  private async confirmEdit(row: any) {
+    row.edit = false
+    row.originalAutoInsert = row.AutoInsert
+    row.originalAutoAccept = row.AutoAccept
+    row.originalname = row.name
+    row.originalgroup = row.group
+    const IP = row.IP
+    const AutoInsert = row.AutoInsert
+    const AutoAccept = row.AutoAccept
+    const name = row.name
+    const group = row.group
+    await updatedevice({ IP, AutoInsert, AutoAccept, name, group })
+    this.$message({
+      message: '交换机信息已保存。',
+      type: 'success'
+    })
   }
 }
 </script>

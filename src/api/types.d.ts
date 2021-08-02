@@ -21,11 +21,11 @@ export interface IDeviceData {
   _id: string
   IP: string
   Secert: string
-  AutoInsert: number
-  AutoAccept: number
+  AutoInsert: boolean
+  AutoAccept: boolean
   name: string
   group: string
-  status: number
+  status: boolean
 }
 
 export interface IGroupData {

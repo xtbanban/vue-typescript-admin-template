@@ -44,7 +44,7 @@ export default new Router({
           path: 'dashboard',
           component: () => import(/* webpackChunkName: "dashboard" */ '@/views/dashboard/index.vue'),
           meta: {
-            title: '主页',
+            title: '首页',
             icon: 'dashboard'
           }
         }
@@ -56,7 +56,7 @@ export default new Router({
       children: [
         {
           path: 'list',
-          component: () => import(/* webpackChunkName: "device" */ '@/views/client/index.vue'),
+          component: () => import(/* webpackChunkName: "client" */ '@/views/client/index.vue'),
           meta: {
             title: '接入设备',
             icon: 'table'
@@ -84,7 +84,7 @@ export default new Router({
       children: [
         {
           path: 'list',
-          component: () => import(/* webpackChunkName: "table" */ '@/views/table/index.vue'),
+          component: () => import(/* webpackChunkName: "logging" */ '@/views/logging/index.vue'),
           meta: {
             title: '计费情况',
             icon: 'table'
