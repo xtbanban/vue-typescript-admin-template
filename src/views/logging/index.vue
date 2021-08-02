@@ -2,7 +2,7 @@
   <div class="app-container">
     <div class="filter-container">
       <el-select
-        v-model="clientvalue" placeholder="请选择">
+        v-model="clientvalue" placeholder="请选择接入设备">
         <el-option
           v-for="item in clientlist"
           :key="item.Login"
@@ -12,7 +12,14 @@
           <span style="float: right; color: #8492a6; font-size: 13px">{{ item.Login }}</span>
         </el-option>
       </el-select>
-      <el-button
+      <!-- {{ clientvalue }} -->
+      <span class="demonstration">月</span>
+        <el-date-picker
+          v-model="valuemonth"
+          type="month"
+          placeholder="选择月">
+        </el-date-picker>
+        <el-button
         v-waves
         class="filter-item"
         type="primary"
@@ -21,7 +28,12 @@
       >
         显示
       </el-button>
-      {{ clientvalue }}
+      <!-- <div class="block">
+        {{ valuemonth }}
+      </div>
+      <div class="block">
+        {{ valuenextmonth }}
+      </div> -->
     </div>
     <div class="block">
       <el-pagination
@@ -151,6 +163,9 @@ export default class extends Vue {
   private currentpage = 1
   private total = 0
   private listLoading = false
+  private now = new Date()
+  private valuemonth = new Date(this.now.getFullYear(), this.now.getMonth(), 1, 0, 0, 0)
+  private valuenextmonth = new Date()
   private listQuery = {
     page: this.currentpage,
     limit: this.pagesize
@@ -168,6 +183,8 @@ export default class extends Vue {
   }
 
   private handleFilter() {
+    this.valuenextmonth = new Date(this.valuemonth.getFullYear(), this.valuemonth.getMonth() + 1, 1, 0, 0, 0)
+
     this.listLoading = true
     this.getList()
   }

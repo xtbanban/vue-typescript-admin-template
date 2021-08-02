@@ -58,21 +58,17 @@
         </template>
       </el-table-column>
       <el-table-column
-        label="名称"
+        label="*共享密钥*"
         width="150"
         align="center"
       >
-        <template slot-scope="scope">
-          <el-input
-            v-if="scope.row.edit"
-            v-model="scope.row.name"
-            size="small"
-          />
-          <span v-else>{{ scope.row.name }}</span>
+      <template slot-scope="scope">
+          <span v-if="scope.row.edit">{{ scope.row.Secert }}</span>
+          <span v-else>{{ Showpassword }}</span>
         </template>
       </el-table-column>
       <el-table-column
-        label="分组"
+        label="分组(排序)"
         width="150"
         align="center"
       >
@@ -86,13 +82,17 @@
         </template>
       </el-table-column>
       <el-table-column
-        label="*共享密钥*"
+        label="名称"
         width="150"
         align="center"
       >
-      <template slot-scope="scope">
-          <span v-if="scope.row.edit">{{ scope.row.Secert }}</span>
-          <span v-else>{{ Showpassword }}</span>
+        <template slot-scope="scope">
+          <el-input
+            v-if="scope.row.edit"
+            v-model="scope.row.name"
+            size="small"
+          />
+          <span v-else>{{ scope.row.name }}</span>
         </template>
       </el-table-column>
       <el-table-column
