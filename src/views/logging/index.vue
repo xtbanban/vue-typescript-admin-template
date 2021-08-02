@@ -2,14 +2,14 @@
   <div class="app-container">
     <div class="filter-container">
       <el-select
-        v-model="Clientvalue" placeholder="请选择">
+        v-model="clientvalue" placeholder="请选择">
         <el-option
-          v-for="item in ClientList"
-          :key="item.value"
-          :label="item.label"
-          :value="item.name">
-          <span style="float: left">{{ item.label }}</span>
-          <span style="float: right; color: #8492a6; font-size: 13px">{{ item.name }}</span>
+          v-for="item in clientlist"
+          :key="item.Login"
+          :label="item.UserName"
+          :value="item.Login">
+          <span style="float: left">{{ item.UserName }}</span>
+          <span style="float: right; color: #8492a6; font-size: 13px">{{ item.Login }}</span>
         </el-option>
       </el-select>
       <el-button
@@ -21,7 +21,7 @@
       >
         显示
       </el-button>
-      {{ Clientvalue }}
+      {{ clientvalue }}
     </div>
     <div class="block">
       <el-pagination
@@ -124,8 +124,8 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
-import { getLogging } from '@/api/logging'
-import { ILoggingData } from '@/api/types'
+import { getLogging, getclientlist } from '@/api/logging'
+import { ILoggingData, IClientListData } from '@/api/types'
 
 @Component({
   name: 'Table',
@@ -145,6 +145,8 @@ import { ILoggingData } from '@/api/types'
 })
 export default class extends Vue {
   private list: ILoggingData[] = []
+  private clientlist: IClientListData[] = []
+  private clientvalue = ''
   private pagesize = 20
   private currentpage = 1
   private total = 0
@@ -153,14 +155,16 @@ export default class extends Vue {
     page: this.currentpage,
     limit: this.pagesize
   }
-  private ClientList = [
-    {label:'hehe', name:'c40938f6d1c6'},
-    {label:'wowo', name:'c40938f6d1c7'}
-  ]
-  private Clientvalue = ''
 
   created() {
-    // this.getList()
+    this.getclient()
+  }
+
+  private async getclient() {
+    this.listLoading = true
+    const { data } = await getclientlist()
+    this.clientlist = data.items
+    this.listLoading = false
   }
 
   private handleFilter() {
@@ -176,7 +180,7 @@ export default class extends Vue {
 
   private async getList() {
     this.listLoading = true
-    const { data } = await getLogging(this.listQuery, { Login: this.Clientvalue })
+    const { data } = await getLogging(this.listQuery, { Login: this.clientvalue })
     this.list = data.items
     this.total = data.total
     // Just to simulate the time of the request

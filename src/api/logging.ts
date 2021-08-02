@@ -7,3 +7,9 @@ export const getLogging = (params: any, data: any) =>
     params,
     data
   })
+
+  export const getclientlist = () =>
+  request({
+    url: '/logging/client',
+    method: 'post',
+  })

@@ -17,6 +17,12 @@ export interface IClientData {
   status: boolean
 }
 
+export interface IClientListData {
+  _id: string
+  Login: string
+  UserName: string
+}
+
 export interface IDeviceData {
   _id: string
   IP: string
