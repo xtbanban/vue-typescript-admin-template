@@ -19,7 +19,14 @@
           type="month"
           placeholder="选择月">
         </el-date-picker>
-        <el-button
+      <el-switch
+        v-model="showsingle"
+        active-color="#13ce66"
+        inactive-color="#ff4949"
+        active-text="精简"
+        inactive-text="全部">
+      </el-switch>
+      <el-button
         v-waves
         class="filter-item"
         type="primary"
@@ -166,6 +173,7 @@ export default class extends Vue {
   private now = new Date()
   private valuemonth = new Date(this.now.getFullYear(), this.now.getMonth(), 1, 0, 0, 0)
   private valuenextmonth = new Date()
+  private showsingle = true
   private listQuery = {
     page: this.currentpage,
     limit: this.pagesize
@@ -197,7 +205,7 @@ export default class extends Vue {
 
   private async getList() {
     this.listLoading = true
-    const { data } = await getLogging(this.listQuery, { Login: this.clientvalue })
+    const { data } = await getLogging(this.listQuery, { Login: this.clientvalue, showsingle: this.showsingle })
     this.list = data.items
     this.total = data.total
     // Just to simulate the time of the request
