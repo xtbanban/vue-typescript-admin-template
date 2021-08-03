@@ -171,7 +171,7 @@ export default class extends Vue {
   private total = 0
   private listLoading = false
   private now = new Date()
-  private valuemonth = new Date(this.now.getFullYear(), this.now.getMonth(), 1, 0, 0, 0)
+  private valuemonth = new Date(this.now.getFullYear(), this.now.getMonth(), 1, 0, 0, 0) // 当前月
   private valuenextmonth = new Date()
   private showsingle = true
   private listQuery = {
@@ -191,8 +191,6 @@ export default class extends Vue {
   }
 
   private handleFilter() {
-    this.valuenextmonth = new Date(this.valuemonth.getFullYear(), this.valuemonth.getMonth() + 1, 1, 0, 0, 0)
-
     this.listLoading = true
     this.getList()
   }
@@ -205,7 +203,15 @@ export default class extends Vue {
 
   private async getList() {
     this.listLoading = true
-    const { data } = await getLogging(this.listQuery, { Login: this.clientvalue, showsingle: this.showsingle })
+    this.valuenextmonth = new Date(this.valuemonth.getFullYear(), this.valuemonth.getMonth() + 1, 1, 0, 0, 0) // 下个月
+    const { data } = await getLogging(this.listQuery,
+      {
+        Login: this.clientvalue,
+        valuemonth: this.valuemonth,
+        valuenextmonth: this.valuenextmonth,
+        showsingle: this.showsingle
+      }
+    )
     this.list = data.items
     this.total = data.total
     // Just to simulate the time of the request
