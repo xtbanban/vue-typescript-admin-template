@@ -86,7 +86,7 @@ export default new Router({
           path: 'list',
           component: () => import(/* webpackChunkName: "logging" */ '@/views/logging/index.vue'),
           meta: {
-            title: '计费情况',
+            title: '接入情况',
             icon: 'table'
           }
         }

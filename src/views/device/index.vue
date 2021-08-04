@@ -8,15 +8,26 @@
         :rules="rules"
       >
       <el-form-item label="IP地址" prop="IP">
-        <el-input v-model="formInline.IP" placeholder="IP地址"></el-input>
+        <el-tooltip class="item" effect="dark" content="配置好<MAC认证功能>的交换机IP地址（必须网络可访问）" placement="top-start">
+          <el-input v-model="formInline.IP" placeholder="IP地址"></el-input>
+        </el-tooltip>
       </el-form-item>
-      <el-form-item label="共享密钥" prop="Secert">
-       <el-input v-model="formInline.Secert" placeholder="共享密钥" show-password></el-input>
+        <el-form-item label="共享密钥" prop="Secert">
+          <el-tooltip class="item" effect="dark" content="交换机配置的共享密钥(Shared Secret)，一般为6位以上的随机字符（保存后不能修改，仅编辑状态可见）" placement="top-start">
+        <el-input v-model="formInline.Secert" placeholder="共享密钥" show-password></el-input>
+        </el-tooltip>
       </el-form-item>
-      <el-switch v-model="formInline.AutoInsert" active-text="自动增加">
-      </el-switch>
-      <el-switch v-model="formInline.AutoAccept" active-text="自动接入">
-      </el-switch>
+      <el-divider direction="vertical"></el-divider>
+        <el-tooltip class="item" effect="dark" content="交换机检测到新加入的接入设备，是否自动增加到【接入设备】数据库（有<交换机IP>字段）" placement="top-start">
+          <el-switch style="height:40px" v-model="formInline.AutoInsert" active-text="自动增加">
+          </el-switch>
+        </el-tooltip>
+      <el-divider direction="vertical"></el-divider>
+      <el-tooltip class="item" effect="dark" content="自动加入的设备，是否同时允许接入网络" placement="top-start">
+        <el-switch style="height:40px" v-model="formInline.AutoAccept" active-text="自动接入">
+        </el-switch>
+      </el-tooltip>
+      <el-divider direction="vertical"></el-divider>
       <el-form-item>
        <el-button type="primary" @click="onaddSubmit">增加</el-button>
       </el-form-item>
@@ -309,3 +320,15 @@ export default class extends Vue {
   }
 }
 </script>
+
+<style lang="scss" scoped>
+.el-form-item__label {
+    text-align: right;
+    vertical-align: middle;
+    font-size: 14px;
+    color: #1f2d3d;
+    line-height: 40px;
+    padding: 0 12px 0 0;
+    box-sizing: border-box;
+}
+</style>

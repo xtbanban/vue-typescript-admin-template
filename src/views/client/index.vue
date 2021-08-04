@@ -7,14 +7,20 @@
         class="demo-form-inline"
         :rules="rules"
       >
-      <el-form-item label="接入用户" prop="Login">
-        <el-input v-model="formInline.Login" placeholder="接入用户名"></el-input>
+      <el-form-item label="接入设备" prop="Login">
+       <el-tooltip class="item" effect="dark" content="12位十六进制数字，小写字母，无分隔符，如：c40938f6d1c6" placement="top-start">
+        <el-input v-model="formInline.Login" placeholder="接入设备MAC地址"></el-input>
+       </el-tooltip>
       </el-form-item>
       <el-form-item label="接入密码" prop="Password">
-       <el-input v-model="formInline.Password" placeholder="接入密码" show-password></el-input>
+       <el-tooltip class="item" effect="dark" content="一般等于接入设备MAC地址（保存后不能修改，仅编辑状态可见）" placement="top-start">
+        <el-input v-model="formInline.Password" placeholder="接入密码" show-password></el-input>
+       </el-tooltip>
       </el-form-item>
       <el-form-item label="关联用户" prop="UserName">
+       <el-tooltip class="item" effect="dark" content="每台接入设备必须关联具体真实用户名称（如不关联，会在“一键设置”后拒绝接入）" placement="top-start">
        <el-input v-model="formInline.UserName" placeholder="关联用户名称"></el-input>
+      </el-tooltip>
       </el-form-item>
       <el-form-item>
        <el-button type="primary" @click="onaddSubmit">增加</el-button>
@@ -48,7 +54,7 @@
         </template>
       </el-table-column>
       <el-table-column
-        label="*接入用户*"
+        label="*接入设备*"
         width="140"
         align="center"
       >
@@ -185,9 +191,9 @@ export default class extends Vue {
   }
 
   private rules = {
-    Login: [{ required: true, message: '必须输入接入用户名', trigger: 'blur' }],
+    Login: [{ required: true, message: '必须输入接入设备MAC地址', trigger: 'blur' }],
     Password: [{ required: true, message: '必须输入接入密码', trigger: 'blur' }],
-    UserName: [{ required: true, message: '必须输入用户真实名称', trigger: 'blur' }]
+    UserName: [{ required: true, message: '必须输入关联用户真实名称', trigger: 'blur' }]
   }
 
   private formInline = {

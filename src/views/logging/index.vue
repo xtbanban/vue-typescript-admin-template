@@ -1,8 +1,10 @@
 <template>
   <div class="app-container">
     <div class="filter-container">
-      <el-select
-        v-model="clientvalue" placeholder="请选择接入设备">
+      <span class="my_label">选择需要显示的</span>
+      <el-tooltip class="item" effect="dark" content="分<关联用户><接入设备>两列排序显示所有接入设备" placement="top-start">
+        <el-select
+        v-model="clientvalue" placeholder="接入设备" @change="handleChange">
         <el-option
           v-for="item in clientlist"
           :key="item.Login"
@@ -11,36 +13,40 @@
           <span style="float: left">{{ item.UserName }}</span>
           <span style="float: right; color: #8492a6; font-size: 13px">{{ item.Login }}</span>
         </el-option>
-      </el-select>
-      <!-- {{ clientvalue }} -->
-      <span class="demonstration">月</span>
-        <el-date-picker
+        </el-select>
+      </el-tooltip>
+      <el-divider direction="vertical"></el-divider>
+      <span class="my_label">选择时间</span>
+      <el-tooltip class="item" effect="dark" content="选择年月（默认当前月份）" placement="top-start">
+      <el-date-picker
           v-model="valuemonth"
           type="month"
-          placeholder="选择月">
-        </el-date-picker>
+          placeholder="年及月份"
+          editable=false
+          @change="handleChange">
+      </el-date-picker>
+      </el-tooltip>
+      <el-divider direction="vertical"></el-divider>
+      <el-tooltip class="item" effect="dark" content="显示全部或精简数据（精简只包括：<许可><开始><结束>）" placement="top-start">
       <el-switch
         v-model="showsingle"
         active-color="#13ce66"
         inactive-color="#ff4949"
         active-text="精简"
-        inactive-text="全部">
+        inactive-text="全部"
+        @change="handleChange">
       </el-switch>
+      </el-tooltip>
+      <el-divider direction="vertical"></el-divider>
       <el-button
         v-waves
         class="filter-item"
         type="primary"
         icon="el-icon-search"
-        @click="handleFilter"
+        @click="handleShow"
       >
         显示
       </el-button>
-      <!-- <div class="block">
-        {{ valuemonth }}
-      </div>
-      <div class="block">
-        {{ valuenextmonth }}
-      </div> -->
     </div>
     <div class="block">
       <el-pagination
@@ -69,7 +75,7 @@
         </template>
       </el-table-column>
       <el-table-column
-        label="用户"
+        label="接入设备"
         width="120"
         align="center"
       >
@@ -190,7 +196,15 @@ export default class extends Vue {
     this.listLoading = false
   }
 
-  private handleFilter() {
+  private handleChange() {
+    this.currentpage = 1
+    this.listQuery.page = this.currentpage
+  }
+
+  private handleShow() {
+    if (!this.valuemonth) {
+      this.valuemonth = new Date(this.now.getFullYear(), this.now.getMonth(), 1, 0, 0, 0) // 当前月
+    }
     this.listLoading = true
     this.getList()
   }
@@ -204,7 +218,8 @@ export default class extends Vue {
   private async getList() {
     this.listLoading = true
     this.valuenextmonth = new Date(this.valuemonth.getFullYear(), this.valuemonth.getMonth() + 1, 1, 0, 0, 0) // 下个月
-    const { data } = await getLogging(this.listQuery,
+    const { data } = await getLogging(
+      this.listQuery,
       {
         Login: this.clientvalue,
         valuemonth: this.valuemonth,
@@ -221,3 +236,15 @@ export default class extends Vue {
   }
 }
 </script>
+
+<style scoped>
+.my_label {
+    text-align: right;
+    vertical-align: middle;
+    font-size: 14px;
+    color: #1f2d3d;
+    line-height: 40px;
+    padding: 0 12px 0 0;
+    box-sizing: border-box;
+}
+</style>

@@ -21,7 +21,7 @@ export const deletedevice = (data: any) =>
     data
   })
 
-  export const updatedevice = (data: any) =>
+export const updatedevice = (data: any) =>
   request({
     url: '/device/update',
     method: 'post',
