@@ -2,9 +2,9 @@ export interface ILoggingData {
   _id: string
   Login: string
   SWIP: string
-  'acc_code': string
-  'resp_code': string
-  status: string
+  acc_code: string
+  resp_code: string
+  status_type: string
   logtime: string
 }
 

@@ -111,8 +111,8 @@
         align="center"
       >
         <template slot-scope="scope">
-          <el-tag :type="scope.row.status | statusFilter">
-            {{ scope.row.status }}
+          <el-tag :type="scope.row.status_type | statusFilter">
+            {{ scope.row.status_type }}
           </el-tag>
         </template>
       </el-table-column>
@@ -124,8 +124,8 @@
       >
         <template slot-scope="scope">
           <i class="el-icon-time" />
-          {{ scope.row.logtime }}
-          <!-- <span>{{ scope.row.logtime | parseTime }}</span> -->
+          <!-- {{ scope.row.logtime }} -->
+          <span>{{ scope.row.logtime | parseTime }}</span>
         </template>
       </el-table-column>
     </el-table>
@@ -156,10 +156,10 @@ import { ILoggingData, IClientListData } from '@/api/types'
         Stop: 'danger'
       }
       return statusMap[status]
+    },
+    parseTime: (timestamp: string) => {
+      return new Date(timestamp).toISOString()
     }
-    // parseTime: (timestamp: string) => {
-    //   return new Date(timestamp).toISOString()
-    // }
   }
 })
 export default class extends Vue {
