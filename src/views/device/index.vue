@@ -68,7 +68,7 @@
         </template>
       </el-table-column>
       <el-table-column
-        label="分组(排序)"
+        label="分组 (排序)"
         width="150"
         align="center"
       >
@@ -97,7 +97,7 @@
       </el-table-column>
       <el-table-column
         label="自动增加"
-        width="100"
+        width="80"
         align="center"
       >
         <template slot-scope="scope">
@@ -117,7 +117,7 @@
       </el-table-column>
       <el-table-column
         label="自动接入"
-        width="100"
+        width="80"
         align="center"
       >
         <template slot-scope="scope">

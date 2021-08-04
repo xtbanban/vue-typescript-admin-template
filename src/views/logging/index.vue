@@ -119,7 +119,7 @@
       <el-table-column
         align="center"
         prop="created_at"
-        label="时刻"
+        label="时刻 (排序)"
         width="200"
       >
         <template slot-scope="scope">

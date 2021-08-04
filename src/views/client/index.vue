@@ -13,8 +13,8 @@
       <el-form-item label="接入密码" prop="Password">
        <el-input v-model="formInline.Password" placeholder="接入密码" show-password></el-input>
       </el-form-item>
-      <el-form-item label="用户真实名" prop="UserName">
-       <el-input v-model="formInline.UserName" placeholder="用户真实名称"></el-input>
+      <el-form-item label="关联用户" prop="UserName">
+       <el-input v-model="formInline.UserName" placeholder="关联用户名称"></el-input>
       </el-form-item>
       <el-form-item>
        <el-button type="primary" @click="onaddSubmit">增加</el-button>
@@ -67,7 +67,7 @@
         </template>
       </el-table-column>
       <el-table-column
-        label="用户真实名"
+        label="关联用户 (排序)"
         width="260"
         align="center"
       >
@@ -90,8 +90,8 @@
         </template>
       </el-table-column>
       <el-table-column
-        label="状态"
-        width="100"
+        label="接入"
+        width="80"
         align="center"
       >
         <template slot-scope="scope">
