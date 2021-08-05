@@ -5,7 +5,7 @@ export interface ILoggingData {
   acc_code: string
   resp_code: string
   status_type: string
-  logtime: string
+  logtime: Date
 }
 
 export interface IClientData {
@@ -31,13 +31,4 @@ export interface IDeviceData {
   AutoAccept: boolean
   name: string
   group: string
-  status: boolean
-}
-
-export interface IGroupData {
-  _id: string
-  groupname: string
-  address: string
-  manager: string
-  mobile: string
 }

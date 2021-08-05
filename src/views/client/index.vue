@@ -103,7 +103,7 @@
         <template slot-scope="scope">
           <el-tag
             v-show="!scope.row.edit"
-            :type="(scope.row.status) ? 'success' : 'danger'" 
+            :type="(scope.row.status) ? 'success' : 'danger'"
             disable-transitions>
             {{ (scope.row.status) ? '允许' : '拒绝' }}
           </el-tag>
@@ -181,7 +181,7 @@ import { IClientData } from '@/api/types'
 export default class extends Vue {
   private Showpassword = '******'
   private list: IClientData[] = []
-  private pagesize = 20 // 不分页
+  private pagesize = 20 // 20行分页
   private currentpage = 1
   private total = 0
   private listLoading = true
@@ -191,9 +191,9 @@ export default class extends Vue {
   }
 
   private rules = {
-    Login: [{ required: true, message: '必须输入接入设备MAC地址', trigger: 'blur' }],
-    Password: [{ required: true, message: '必须输入接入密码', trigger: 'blur' }],
-    UserName: [{ required: true, message: '必须输入关联用户真实名称', trigger: 'blur' }]
+    Login: [{ required: true, message: '请输入接入设备MAC地址', trigger: 'blur' }],
+    Password: [{ required: true, message: '请输入接入密码', trigger: 'blur' }],
+    UserName: [{ required: true, message: '请输入关联用户真实名称', trigger: 'blur' }]
   }
 
   private formInline = {
@@ -247,7 +247,7 @@ export default class extends Vue {
     const { data } = await getclient(this.listQuery)
     const items = data.items
     this.list = items.map((v: any) => {
-      this.$set(v, 'edit', false) // https://vuejs.org/v2/guide/reactivity.html
+      this.$set(v, 'edit', false)
       v.originalUserName = v.UserName
       return v
     })

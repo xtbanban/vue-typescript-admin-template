@@ -8,7 +8,7 @@
         </div>
       </template>
       <div class="text item">
-        {{'合计：100'}}
+        合计：{{all}}
       </div>
       <div class="text item">
         {{'允许接入：60'}}
@@ -45,18 +45,34 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
-import { UserModule } from '@/store/modules/user'
+import { getdashboard } from '@/api/client'
 
 @Component({
   name: 'Dashboard'
 })
+
 export default class extends Vue {
-  get name() {
-    return UserModule.name
+  private listLoading = true
+  private all = 10
+  private available = 0
+  private newwaitset = 0
+  private noset = 0
+
+  created() {
+    this.getList()
   }
 
-  get roles() {
-    return UserModule.roles
+  private async getList() {
+    this.listLoading = true
+    const { data } = await getdashboard()
+    this.all = data.all
+    this.available = data.available
+    this.newwaitset = data.newwaitset
+    this.noset = data.noset
+    // Just to simulate the time of the request
+    setTimeout(() => {
+      this.listLoading = false
+    }, 0.5 * 1000)
   }
 }
 </script>
@@ -77,4 +93,14 @@ export default class extends Vue {
     width: 450px;
     margin: 40px;
   }
+
+  .my_label {
+    text-align: right;
+    vertical-align: middle;
+    font-size: 14px;
+    color: #1f2d3d;
+    line-height: 40px;
+    padding: 0 12px 0 0;
+    box-sizing: border-box;
+}
 </style>

@@ -114,7 +114,7 @@
         <template slot-scope="scope">
           <el-tag
             v-show="!scope.row.edit"
-            :type="(scope.row.AutoInsert) ? 'success' : 'danger'" 
+            :type="(scope.row.AutoInsert) ? 'success' : 'danger'"
             disable-transitions>
             {{ (scope.row.AutoInsert) ? '是' : '否' }}
           </el-tag>
