@@ -33,3 +33,9 @@ export const getclientdashboard = () =>
     url: '/client/dashboard',
     method: 'post'
   })
+
+export const oneclickset = () =>
+  request({
+    url: '/client/oneclickset',
+    method: 'post'
+  }) 

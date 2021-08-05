@@ -18,7 +18,7 @@
       </div>
       <div class="text item">
         未关联能接入：{{noset}}
-        <el-button class="button card-rigth" type="text">一键设置</el-button>
+        <el-button class="button card-rigth" type="text" @click="handledoneset">一键设置</el-button>
       </div>
     </el-card>
     </el-col>
@@ -56,7 +56,7 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
-import { getclientdashboard } from '@/api/client'
+import { getclientdashboard, oneclickset } from '@/api/client'
 import { getdevicedashboard } from '@/api/device'
 
 @Component({
@@ -92,6 +92,26 @@ export default class extends Vue {
     this.autoinsert = data.autoinsert
     this.autoaccept = data.autoaccept
   }
+
+  private handledoneset() {
+    this.$confirm('此操作未关联的设备全部设置为拒绝接入, 是否继续?', '提示', {
+      confirmButtonText: '确定',
+      cancelButtonText: '取消',
+      type: 'warning'
+    }).then(() => {
+      this.tooneset()
+    })
+  }
+
+  private async tooneset() {
+    await oneclickset()
+    this.getclientList()
+    this.getdeviceList()
+    this.$message({
+      message: '一键设置完成。',
+      type: 'success'
+    })
+  }
 }
 </script>
 
@@ -112,6 +132,6 @@ export default class extends Vue {
     margin: 40px;
   }
   .card-rigth {
-    padding-left: 150px
+    float: right
   }
 </style>
