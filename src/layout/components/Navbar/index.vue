@@ -10,7 +10,7 @@
       id="breadcrumb-container"
       class="breadcrumb-container"
     />
-    <div class="right-menu">
+    <!-- <div class="right-menu">
       <el-dropdown
         class="avatar-container right-menu-item hover-effect"
         trigger="click"
@@ -36,7 +36,7 @@
           </el-dropdown-item>
         </el-dropdown-menu>
       </el-dropdown>
-    </div>
+    </div> -->
   </div>
 </template>
 

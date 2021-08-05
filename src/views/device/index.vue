@@ -134,7 +134,7 @@
         <template slot-scope="scope">
           <el-tag
             v-show="!scope.row.edit"
-            :type="(scope.row.AutoAccept) ? 'success' : 'danger'" 
+            :type="(scope.row.AutoAccept) ? 'success' : 'danger'"
             disable-transitions>
             {{ (scope.row.AutoAccept) ? '是' : '否' }}
           </el-tag>
@@ -222,8 +222,8 @@ export default class extends Vue {
   }
 
   private rules = {
-    IP: [{ required: true, message: '必须输入IP地址', trigger: 'blur' }],
-    Secert: [{ required: true, message: '必须输入共享密钥', trigger: 'blur' }]
+    IP: [{ required: true, message: '请输入IP地址', trigger: 'blur' }],
+    Secert: [{ required: true, message: '请输入共享密钥', trigger: 'blur' }]
   }
 
   private formInline = {

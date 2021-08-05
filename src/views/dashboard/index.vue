@@ -8,17 +8,28 @@
         </div>
       </template>
       <div class="text item">
-        合计：{{totalclient}}
+        合计：<span class="number">{{totalclient}}</span>
       </div>
       <div class="text item">
-        允许接入：{{available}}
+        允许接入：
+        <el-tooltip class="item" effect="dark" content="能接入网络的有效接入设备。" placement="top-start">
+          <span class="number">{{available}}</span>
+        </el-tooltip>
       </div>
       <div class="text item">
-        新增等待关联：{{newwaitset}}
+        新增等待关联：
+        <el-tooltip class="item" effect="dark" content="交换机自动增加的设备，需要填写真实用户名称，以关联用户。" placement="top-start">
+          <span class="number">{{newwaitset}}</span>
+        </el-tooltip>
       </div>
       <div class="text item">
-        未关联能接入：{{noset}}
-        <el-button class="button card-rigth" type="text" @click="handledoneset">一键设置</el-button>
+        能接入未关联：
+        <el-tooltip class="item" effect="dark" content="没有真实名称又能接入的设备，有安全隐患。" placement="top-start">
+          <span class="number">{{noset}}</span>
+        </el-tooltip>
+        <el-tooltip class="item" effect="dark" content="将所有未关联真实名称的接入设备设置为拒绝接入，以满足安全需求。" placement="top-start">
+          <el-button class="button card-rigth" type="primary" @click="handledoneset">一键设置</el-button>
+        </el-tooltip>  
       </div>
     </el-card>
     </el-col>
@@ -30,13 +41,29 @@
         </div>
       </template>
       <div class="text item">
-        合计：{{totaldevice}}
+        合计：<span class="number">{{totaldevice}}</span>
       </div>
       <div class="text item">
-        自动增加：{{autoinsert}}
+        自动增加：
+        <el-tooltip class="item" effect="dark" content="为方便增加设备，所有交换机都应设置自动增加。" placement="top-start">
+          <span class="number">{{autoinsert}}</span>
+        </el-tooltip>
+        <span v-if="!(autoinsert===totaldevice)">
+          <el-tooltip class="item" effect="dark" content="安全警告。" placement="top-start">
+            <i class="el-icon-warning-outline icon-rigth"></i>
+          </el-tooltip>
+        </span>
       </div>
       <div class="text item">
-        自动接入：{{autoaccept}}
+        自动接入：
+        <el-tooltip class="item" effect="dark" content="为安全接入，所有交换机都应不设置为自动接入。" placement="top-start">
+          <span class="number">{{autoaccept}}</span>
+        </el-tooltip>
+        <span v-if="autoaccept>0">
+          <el-tooltip class="item" effect="dark" content="安全警告。" placement="top-start">
+            <i class="el-icon-warning-outline icon-rigth"></i>
+          </el-tooltip>
+        </span>
       </div>
     </el-card>
     </el-col>
@@ -120,9 +147,14 @@ export default class extends Vue {
       display: flex;
       justify-content: space-between;
       align-items: center;
+      font-size: 22px;
   }
   .text {
-    font-size: 14px;
+    font-size: 18px;
+    height: 30px;
+  }
+  .number {
+    font-size: 22px;
   }
   .item {
     margin-bottom: 18px;
@@ -133,5 +165,10 @@ export default class extends Vue {
   }
   .card-rigth {
     float: right
+  }
+  .icon-rigth {
+    float: right;
+    padding-right: 80px;
+    height: 30px;
   }
 </style>

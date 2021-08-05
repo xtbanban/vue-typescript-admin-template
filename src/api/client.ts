@@ -38,4 +38,4 @@ export const oneclickset = () =>
   request({
     url: '/client/oneclickset',
     method: 'post'
-  }) 
+  })

@@ -237,7 +237,7 @@ export default class extends Vue {
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .my_label {
     text-align: right;
     vertical-align: middle;
