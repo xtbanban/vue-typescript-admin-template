@@ -28,7 +28,7 @@ export const updateclient = (data: any) =>
     data
   })
 
-  export const getdashboard = () =>
+export const getclientdashboard = () =>
   request({
     url: '/client/dashboard',
     method: 'post'

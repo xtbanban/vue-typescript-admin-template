@@ -27,3 +27,9 @@ export const updatedevice = (data: any) =>
     method: 'post',
     data
   })
+
+export const getdevicedashboard = () =>
+  request({
+    url: '/device/dashboard',
+    method: 'post'
+  })
