@@ -151,6 +151,7 @@
 import { Component, Vue } from 'vue-property-decorator'
 import { getLogging, getclientlist } from '@/api/logging'
 import { ILoggingData, IClientListData } from '@/api/types'
+import { Sidebar } from '@/layout/components'
 
 @Component({
   name: 'Table',
@@ -164,7 +165,18 @@ import { ILoggingData, IClientListData } from '@/api/types'
       return statusMap[status]
     },
     parseTime: (timestamp: string) => {
-      return new Date(timestamp).toISOString()
+      var date= new Date(timestamp);
+      var year=date.getFullYear();
+      /* 在日期格式中，月份是从0开始的，因此要加0
+      * 使用三元表达式在小于10的前面加0，以达到格式统一  如 09:11:05
+      * */
+      var month= date.getMonth()+1<10 ? "0"+(date.getMonth()+1) : date.getMonth()+1;
+      var day=date.getDate()<10 ? "0"+date.getDate() : date.getDate();
+      var hours=date.getHours()<10 ? "0"+date.getHours() : date.getHours();
+      var minutes=date.getMinutes()<10 ? "0"+date.getMinutes() : date.getMinutes();
+      var seconds=date.getSeconds()<10 ? "0"+date.getSeconds() : date.getSeconds();
+      // 拼接
+      return year+"-"+month+"-"+day+" "+hours+":"+minutes+":"+seconds;
     }
   }
 })
@@ -187,6 +199,11 @@ export default class extends Vue {
 
   created() {
     this.getclient()
+    if (!(this.$route.query.Login == undefined)) {
+      this.clientvalue = String(this.$route.query.Login) // 从接入设备页面进来，根据参数Login自动绑定选择框
+    }
+    // console.log( this.$route.path) // =/logging/list/ （todo：选中本路由菜单）
+    // console.log(Sidebar)
   }
 
   private async getclient() {

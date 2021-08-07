@@ -1,37 +1,48 @@
 <template>
-  <el-row>
+  <el-row :gutter="20">
     <el-col :span="12">
       <el-card class="box-card">
-      <template #header>
-        <div class="card-header">
-         <span>接入设备</span>
+        <template #header>
+          <div class="card-header">
+          <span>接入设备</span>
+          </div>
+        </template>
+        <div class="text item">
+         接入设备合计：
+         <span class="number">{{totalclient}}</span>
+         <i class="el-icon-circle-check"></i>
         </div>
-      </template>
-      <div class="text item">
-        合计：<span class="number">{{totalclient}}</span>
-      </div>
-      <div class="text item">
-        允许接入：
-        <el-tooltip class="item" effect="dark" content="能接入网络的有效接入设备。" placement="top-start">
-          <span class="number">{{available}}</span>
-        </el-tooltip>
-      </div>
-      <div class="text item">
-        新增等待关联：
-        <el-tooltip class="item" effect="dark" content="交换机自动增加的设备，需要填写真实用户名称，以关联用户。" placement="top-start">
-          <span class="number">{{newwaitset}}</span>
-        </el-tooltip>
-      </div>
-      <div class="text item">
-        能接入未关联：
-        <el-tooltip class="item" effect="dark" content="没有真实名称又能接入的设备，有安全隐患。" placement="top-start">
-          <span class="number">{{noset}}</span>
-        </el-tooltip>
-        <el-tooltip class="item" effect="dark" content="将所有未关联真实名称的接入设备设置为拒绝接入，以满足安全需求。" placement="top-start">
-          <el-button class="button card-rigth" type="primary" @click="handledoneset">一键设置</el-button>
-        </el-tooltip>  
-      </div>
-    </el-card>
+        <div class="text item">
+          允许接入设备：
+          <el-tooltip effect="dark" content="能接入网络的有效接入设备。" placement="top-start">
+            <span class="number">{{available}}</span>
+          </el-tooltip>
+          <i class="el-icon-circle-check"></i>
+       </div>
+       <div class="text item">
+         新增等待关联：
+         <el-tooltip effect="dark" content="交换机自动增加的设备，需要填写真实用户名称，以关联用户。" placement="top-start">
+           <span class="number">{{newwaitset}}</span>
+         </el-tooltip>
+         <span v-if="newwaitset>0">
+          <el-tooltip effect="dark" content="操作提醒：请及时关联用户。" placement="top-start">
+            <i class="el-icon-circle-plus"></i>
+          </el-tooltip>
+         </span>
+         <span v-else>
+            <i class="el-icon-circle-check"></i>
+         </span>
+       </div>
+        <div class="text item">
+         能接入未关联：
+         <el-tooltip effect="dark" content="没有真实名称又能接入的设备，有安全隐患。" placement="top-start">
+            <span class="number number4">{{noset}}</span>
+          </el-tooltip>
+          <el-tooltip effect="dark" content="将所有未关联真实名称的接入设备设置为拒绝接入，以满足安全需求。" placement="top-start">
+            <el-button class="button" type="primary" @click="handledoneset" :disabled="!noset">一键设置</el-button>
+          </el-tooltip>  
+        </div>
+      </el-card>
     </el-col>
     <el-col :span="12">
       <el-card class="box-card">
@@ -41,44 +52,44 @@
         </div>
       </template>
       <div class="text item">
-        合计：<span class="number">{{totaldevice}}</span>
+        交换机合计数：
+        <span class="number">{{totaldevice}}</span>
+        <i class="el-icon-circle-check"></i>
       </div>
       <div class="text item">
-        自动增加：
-        <el-tooltip class="item" effect="dark" content="为方便增加设备，所有交换机都应设置自动增加。" placement="top-start">
+        设置自动增加：
+        <el-tooltip effect="dark" content="为方便增加设备，所有交换机都应设置自动增加。" placement="top-start">
           <span class="number">{{autoinsert}}</span>
         </el-tooltip>
         <span v-if="!(autoinsert===totaldevice)">
-          <el-tooltip class="item" effect="dark" content="安全警告。" placement="top-start">
-            <i class="el-icon-warning-outline icon-rigth"></i>
+          <el-tooltip effect="dark" content="操作提醒：应等于合计数。" placement="top-start">
+            <i class="el-icon-error"></i>
           </el-tooltip>
+        </span>
+        <span v-else>
+            <i class="el-icon-circle-check"></i>
         </span>
       </div>
       <div class="text item">
-        自动接入：
-        <el-tooltip class="item" effect="dark" content="为安全接入，所有交换机都应不设置为自动接入。" placement="top-start">
+        设置自动接入：
+        <el-tooltip effect="dark" content="为安全接入，所有交换机都应不设置为自动接入。" placement="top-start">
           <span class="number">{{autoaccept}}</span>
         </el-tooltip>
         <span v-if="autoaccept>0">
-          <el-tooltip class="item" effect="dark" content="安全警告。" placement="top-start">
-            <i class="el-icon-warning-outline icon-rigth"></i>
+          <el-tooltip effect="dark" content="安全警告：应等于0。" placement="top-start">
+            <i class="el-icon-error"></i>
           </el-tooltip>
+        </span>
+        <span v-else>
+            <i class="el-icon-circle-check"></i>
         </span>
       </div>
     </el-card>
     </el-col>
-  </el-row >
-  <!-- <template>
-  <el-descriptions title="用户信息">
-    <el-descriptions-item label="用户名">kooriookami</el-descriptions-item>
-    <el-descriptions-item label="手机号">18100000000</el-descriptions-item>
-    <el-descriptions-item label="居住地">苏州市</el-descriptions-item>
-    <el-descriptions-item label="备注">
-      <el-tag size="small">学校</el-tag>
-    </el-descriptions-item>
-    <el-descriptions-item label="联系地址">江苏省苏州市吴中区吴中大道 1188 号</el-descriptions-item>
-  </el-descriptions>
-  </template> -->
+    <el-col :span="24"><div class="grid-content bg-purple"></div>
+      
+    </el-col>
+  </el-row>
 </template>
 
 <script lang="ts">
@@ -155,20 +166,27 @@ export default class extends Vue {
   }
   .number {
     font-size: 22px;
+    margin-left: -100px;
+  }
+  .number4 {
+    margin-right: -80px;
   }
   .item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     margin-bottom: 18px;
   }
   .box-card {
-    width: 450px;
-    margin: 40px;
+    width: 400px;
+    height: 300px;
+    margin: 10%;
   }
-  .card-rigth {
-    float: right
+  .grid-content {
+    border-radius: 4px;
+    min-height: 36px;
   }
-  .icon-rigth {
-    float: right;
-    padding-right: 80px;
-    height: 30px;
+   .bg-purple {
+    background: #d3dce6;
   }
 </style>

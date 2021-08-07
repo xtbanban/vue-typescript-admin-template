@@ -15,7 +15,7 @@ Vue.use(Router)
 */
 
 export default new Router({
-  // mode: 'history',  // Enable this if you need.
+  mode: 'history',  // Enable this if you need.
   scrollBehavior: (to, from, savedPosition) => {
     if (savedPosition) {
       return savedPosition
@@ -92,6 +92,20 @@ export default new Router({
         }
       ]
     },
+    // {
+    //   path: '/setup',
+    //   component: Layout,
+    //   children: [
+    //     {
+    //       path: 'list',
+    //       component: () => import(/* webpackChunkName: "logging" */ '@/views/setup/index.vue'),
+    //       meta: {
+    //         title: '设置',
+    //         icon: 'table'
+    //       }
+    //     }
+    //   ]
+    // },
     {
       path: '/logout',
       component: Layout,

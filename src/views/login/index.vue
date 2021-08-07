@@ -24,7 +24,7 @@
           name="username"
           type="text"
           autocomplete="on"
-          placeholder="username"
+          placeholder="请输入用户名"
         />
       </el-form-item>
 
@@ -37,7 +37,7 @@
           ref="password"
           v-model="loginForm.password"
           :type="passwordType"
-          placeholder="password"
+          placeholder="请输入密码"
           name="password"
           autocomplete="on"
           @keyup.enter.native="handleLogin"
@@ -99,7 +99,7 @@ export default class extends Vue {
 
   private loginForm = {
     username: 'admin',
-    password: 'radius-2021'
+    password: ''
   }
 
   private loginRules = {

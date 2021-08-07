@@ -59,7 +59,7 @@
         align="center"
       >
         <template slot-scope="scope">
-          {{ scope.row.Login }}
+          <el-link :underline="false" :href="'/logging/list/?Login=' + scope.row.Login">{{ scope.row.Login }}</el-link>
         </template>
       </el-table-column>
       <el-table-column

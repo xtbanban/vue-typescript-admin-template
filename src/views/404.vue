@@ -25,26 +25,18 @@
       </div>
       <div class="text-404">
         <div class="text-404__oops">
-          OOPS!
-        </div>
-        <div class="text-404__info">
-          All rights reserved
-          <a
-            style="color:#20a0ff"
-            href="https://wallstreetcn.com"
-            target="_blank"
-          >wallstreetcn</a>
+          出错了！
         </div>
         <div class="text-404__headline">
           {{ message }}
         </div>
         <div class="text-404__info">
-          Please check that the URL you entered is correct, or click the button below to return to the homepage.
+          请检查URL是否正确，或按【回到主页】
         </div>
         <a
-          href=""
+          href="/"
           class="text-404__return-home"
-        >Back to home</a>
+        >回到主页</a>
       </div>
     </div>
   </div>
@@ -57,7 +49,7 @@ import { Component, Vue } from 'vue-property-decorator'
   name: 'Page404'
 })
 export default class extends Vue {
-  private message = '404 Page Not Found'
+  private message = '404 页面找不到'
 }
 </script>
 
