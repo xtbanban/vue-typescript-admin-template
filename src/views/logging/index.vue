@@ -27,7 +27,7 @@
       </el-date-picker>
       </el-tooltip>
       <el-divider direction="vertical"></el-divider>
-      <el-tooltip class="item" effect="dark" content="显示全部或精简数据（精简只包括：<许可><开始><结束>）" placement="top-start">
+      <el-tooltip class="item" effect="dark" content="显示全部或精简数据（精简只包括：<开始><结束>）" placement="top-start">
       <el-switch
         v-model="showsingle"
         active-color="#13ce66"
