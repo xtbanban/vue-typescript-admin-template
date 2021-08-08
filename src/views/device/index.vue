@@ -1,6 +1,7 @@
 <template>
   <div class="app-container">
     <el-form
+        v-show="hasrole"
         ref="addForm"
         :inline="true"
         :model="formInline"
@@ -171,6 +172,7 @@
           </div>
           <div v-else>
             <el-button
+              :disabled='!hasrole'
               type="primary"
               size="small"
               @click="scope.row.edit=!scope.row.edit"
@@ -178,6 +180,7 @@
               编辑
             </el-button>
             <el-button
+              :disabled='!hasrole'
               size="mini"
               type="danger"
               @click="handleDelete(scope.row.IP)"
@@ -205,6 +208,7 @@ import { Component, Vue } from 'vue-property-decorator'
 import { Form } from 'element-ui'
 import { getdevice, adddevice, updatedevice, deletedevice } from '@/api/device'
 import { IDeviceData } from '@/api/types'
+import { UserModule } from '@/store/modules/user'
 
 @Component({
   name: 'Device'
@@ -219,6 +223,11 @@ export default class extends Vue {
   private listQuery = {
     page: this.currentpage,
     limit: this.pagesize
+  }
+
+  get hasrole() {
+    // 是否有此权限
+    return UserModule.roles.indexOf('admin') > -1
   }
 
   private rules = {

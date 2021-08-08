@@ -40,7 +40,7 @@
           </el-tooltip>
           <el-tooltip effect="dark" content="将所有未关联真实名称的接入设备设置为拒绝接入，以满足安全需求。" placement="top-start">
             <el-button class="button" type="primary" @click="handledoneset" :disabled="!noset">一键设置</el-button>
-          </el-tooltip>  
+          </el-tooltip>
         </div>
       </el-card>
     </el-col>
@@ -87,7 +87,7 @@
     </el-card>
     </el-col>
     <el-col :span="24"><div class="grid-content bg-purple"></div>
-      
+
     </el-col>
   </el-row>
 </template>

@@ -10,6 +10,9 @@
       id="breadcrumb-container"
       class="breadcrumb-container"
     />
+    <div class="right-menu">
+      <span>{{ name }}</span>
+    </div>
     <!-- <div class="right-menu">
       <el-dropdown
         class="avatar-container right-menu-item hover-effect"
@@ -55,6 +58,10 @@ import Hamburger from '@/components/Hamburger/index.vue'
   }
 })
 export default class extends Vue {
+  get name() {
+    return UserModule.name
+  }
+
   get sidebar() {
     return AppModule.sidebar
   }
@@ -108,52 +115,53 @@ export default class extends Vue {
     float: right;
     height: 100%;
     line-height: 50px;
+    padding-right: 20px;
 
-    &:focus {
-      outline: none;
-    }
+  //   &:focus {
+  //     outline: none;
+  //   }
 
-    .right-menu-item {
-      display: inline-block;
-      padding: 0 8px;
-      height: 100%;
-      font-size: 18px;
-      color: #5a5e66;
-      vertical-align: text-bottom;
+  //   .right-menu-item {
+  //     display: inline-block;
+  //     padding: 0 8px;
+  //     height: 100%;
+  //     font-size: 18px;
+  //     color: #5a5e66;
+  //     vertical-align: text-bottom;
 
-      &.hover-effect {
-        cursor: pointer;
-        transition: background .3s;
+  //     &.hover-effect {
+  //       cursor: pointer;
+  //       transition: background .3s;
 
-        &:hover {
-          background: rgba(0, 0, 0, .025)
-        }
-      }
-    }
+  //       &:hover {
+  //         background: rgba(0, 0, 0, .025)
+  //       }
+  //     }
+  //   }
 
-    .avatar-container {
-      margin-right: 30px;
+  //   .avatar-container {
+  //     margin-right: 30px;
 
-      .avatar-wrapper {
-        margin-top: 5px;
-        position: relative;
+  //     .avatar-wrapper {
+  //       margin-top: 5px;
+  //       position: relative;
 
-        .user-avatar {
-          cursor: pointer;
-          width: 40px;
-          height: 40px;
-          border-radius: 10px;
-        }
+  //       .user-avatar {
+  //         cursor: pointer;
+  //         width: 40px;
+  //         height: 40px;
+  //         border-radius: 10px;
+  //       }
 
-        .el-icon-caret-bottom {
-          cursor: pointer;
-          position: absolute;
-          right: -20px;
-          top: 25px;
-          font-size: 12px;
-        }
-      }
-    }
+  //       .el-icon-caret-bottom {
+  //         cursor: pointer;
+  //         position: absolute;
+  //         right: -20px;
+  //         top: 25px;
+  //         font-size: 12px;
+  //       }
+  //     }
+  //   }
   }
 }
 </style>

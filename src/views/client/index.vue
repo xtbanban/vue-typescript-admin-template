@@ -147,6 +147,7 @@
               编辑
             </el-button>
             <el-button
+              :disabled='!hasrole'
               size="mini"
               type="danger"
               @click="handleDelete(scope.row.Login)"
@@ -174,6 +175,7 @@ import { Component, Vue } from 'vue-property-decorator'
 import { Form } from 'element-ui'
 import { getclient, addclient, updateclient, deleteclient } from '@/api/client'
 import { IClientData } from '@/api/types'
+import { UserModule } from '@/store/modules/user'
 
 @Component({
   name: 'Client'
@@ -188,6 +190,11 @@ export default class extends Vue {
   private listQuery = {
     page: this.currentpage,
     limit: this.pagesize
+  }
+
+  get hasrole() {
+    // 是否有此权限
+    return UserModule.roles.indexOf('admin') > -1
   }
 
   private rules = {
