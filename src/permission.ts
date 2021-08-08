@@ -5,6 +5,7 @@ import { Message } from 'element-ui'
 import { Route } from 'vue-router'
 import { UserModule } from '@/store/modules/user'
 import { PermissionModule } from '@/store/modules/permission'
+import { asyncRoutes, constantRoutes } from '@/router'
 
 NProgress.configure({ showSpinner: false })
 
@@ -34,9 +35,9 @@ router.beforeEach(async(to: Route, _: Route, next: any) => {
           // Generate accessible routes map based on role
           PermissionModule.GenerateRoutes(roles)
           // Dynamically add accessible routes
-          router.addRoutes(PermissionModule.dynamicRoutes)
+          router.addRoutes(asyncRoutes) // PermissionModule.dynamicRoutes
           console.log('roles:', roles)
-          console.log('dynamicRoutes', PermissionModule.dynamicRoutes)
+          console.log('dynamicRoutes:', PermissionModule.dynamicRoutes)
           // Hack: ensure addRoutes is complete
           // Set the replace: true, so the navigation will not leave a history record
           next({ ...to, replace: true })

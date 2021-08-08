@@ -61,6 +61,35 @@ export const constantRoutes: RouteConfig[] = [
     ]
   },
   {
+    path: '/client',
+    component: Layout,
+    children: [
+      {
+        path: 'list',
+        component: () => import(/* webpackChunkName: "client" */ '@/views/client/index.vue'),
+        meta: {
+          title: '接入设备',
+          icon: 'table'
+          // roles: ['admin', 'editor']
+        }
+      }
+    ]
+  },
+  {
+    path: '/device',
+    component: Layout,
+    children: [
+      {
+        path: 'list',
+        component: () => import(/* webpackChunkName: "device" */ '@/views/device/index.vue'),
+        meta: {
+          title: '交换机',
+          icon: 'table'
+        }
+      }
+    ]
+  },
+  {
     path: '/logging',
     component: Layout,
     children: [
@@ -73,6 +102,14 @@ export const constantRoutes: RouteConfig[] = [
         }
       }
     ]
+  },
+  {
+    path: '/logout',
+    component: Layout,
+    meta: {
+      title: '退出',
+      icon: 'link'
+    }
   }
 ]
 
@@ -82,55 +119,19 @@ export const constantRoutes: RouteConfig[] = [
 */
 export const asyncRoutes: RouteConfig[] = [
   {
-    path: '/client',
-    component: Layout,
-    meta: {
-      // roles: ['admin', 'editor']
-    },
-    children: [
-      {
-        path: 'list',
-        component: () => import(/* webpackChunkName: "client" */ '@/views/client/index.vue'),
-        meta: {
-          title: '接入设备',
-          icon: 'table',
-          // roles: ['admin', 'editor']
-        }
-      }
-    ]
-  },
-  {
-    path: '/device',
-    component: Layout,
-    meta: {
-      // roles: ['admin', 'editor']
-    },
-    children: [
-      {
-        path: 'list',
-        component: () => import(/* webpackChunkName: "device" */ '@/views/device/index.vue'),
-        meta: {
-          title: '交换机',
-          icon: 'table',
-          // roles: ['admin', 'editor']
-        }
-      }
-    ]
-  },
-  {
     path: '/setup',
     component: Layout,
-    // meta: {
-    //   roles: ['admin']
-    // },
+    meta: {
+      roles: ['admin']
+    },
     children: [
       {
         path: 'list',
         component: () => import(/* webpackChunkName: "logging" */ '@/views/setup/index.vue'),
         meta: {
           title: '设置',
-          icon: 'table'
-          // roles: ['admin']
+          icon: 'table',
+          roles: ['admin']
         }
       }
     ]
