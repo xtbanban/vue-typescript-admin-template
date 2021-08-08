@@ -1,7 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Layout from '@/layout/index.vue'
-import { UserModule } from '@/store/modules/user'
 
 Vue.use(Router)
 
@@ -96,9 +95,6 @@ export default new Router({
     {
       path: '/setup',
       component: Layout,
-      meta: {
-        hidden: (UserModule.name === 'admin')
-      },
       children: [
         {
           path: 'list',
