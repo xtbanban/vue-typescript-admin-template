@@ -39,7 +39,8 @@ export default class extends Vue {
   }
 
   get routes() {
-    return (this.$router as any).options.routes
+    // return (this.$router as any).options.routes // 已经不能取得动态增加后的路由，应由 getRoutes() 方法取得
+    return (this.$router as any).getRoutes()
   }
 
   get variables() {

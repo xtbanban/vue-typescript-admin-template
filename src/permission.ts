@@ -1,4 +1,4 @@
-import router from './router'
+import router, { resetRouter } from './router'
 import NProgress from 'nprogress'
 import 'nprogress/nprogress.css'
 import { Message } from 'element-ui'
@@ -6,7 +6,6 @@ import { Route } from 'vue-router'
 import { UserModule } from '@/store/modules/user'
 import { PermissionModule } from '@/store/modules/permission'
 NProgress.configure({ showSpinner: false })
-import { resetRouter } from '@/router'
 
 const whiteList = ['/login']
 
@@ -21,8 +20,9 @@ router.beforeEach(async(to: Route, _: Route, next: any) => {
       next({ path: '/' })
       NProgress.done()
     } else if (to.path === '/logout') {
-      // If is logout, redirect to the home page
+      // 重置注册的路由导航map，主要是为了通过addRoutes方法动态注入新路由时，避免重复注册相同name路由
       resetRouter()
+      // If is logout, redirect to the home page
       UserModule.ResetToken()
       next(`/login`)
     } else {
@@ -34,12 +34,11 @@ router.beforeEach(async(to: Route, _: Route, next: any) => {
           const roles = UserModule.roles
           // Generate accessible routes map based on role
           PermissionModule.GenerateRoutes(roles)
-          // 重置注册的路由导航map，主要是为了通过addRoutes方法动态注入新路由时，避免重复注册相同name路由
-          resetRouter()
           // Dynamically add accessible routes
-          router.addRoutes(PermissionModule.dynamicRoutes)
-          console.log('roles:', roles)
-          console.log('dynamicRoutes:', PermissionModule.dynamicRoutes)
+          // router.addRoutes(PermissionModule.dynamicRoutes) // router.addRoutes 已废弃：使用 router.addRoute() 代替。
+          PermissionModule.dynamicRoutes.forEach(route => {
+            router.addRoute(route)
+          })
           // Hack: ensure addRoutes is complete
           // Set the replace: true, so the navigation will not leave a history record
           next({ ...to, replace: true })
@@ -72,5 +71,9 @@ router.afterEach((to: Route) => {
   NProgress.done()
 
   // set page title
-  document.title = to.meta.title
+  if (to.meta.title == undefined) {
+    document.title = 'RadiusServer'
+  } else {
+    document.title = to.meta.title + ' | RadiusServer'
+  }
 })

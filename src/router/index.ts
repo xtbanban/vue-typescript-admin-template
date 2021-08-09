@@ -49,9 +49,11 @@ export const constantRoutes: RouteConfig[] = [
     path: '/',
     component: Layout,
     redirect: '/dashboard',
+    meta: { hidden: true }, // 主动设置不显示
     children: [
       {
         path: 'dashboard',
+        name: 'dashboard',
         component: () => import(/* webpackChunkName: "dashboard" */ '@/views/dashboard/index.vue'),
         meta: {
           title: '首页',
@@ -63,14 +65,15 @@ export const constantRoutes: RouteConfig[] = [
   {
     path: '/client',
     component: Layout,
+    meta: { hidden: true },
     children: [
       {
         path: 'list',
+        name: 'client',
         component: () => import(/* webpackChunkName: "client" */ '@/views/client/index.vue'),
         meta: {
           title: '接入设备',
           icon: 'table'
-          // roles: ['admin', 'editor']
         }
       }
     ]
@@ -78,9 +81,11 @@ export const constantRoutes: RouteConfig[] = [
   {
     path: '/device',
     component: Layout,
+    meta: { hidden: true },
     children: [
       {
         path: 'list',
+        name: 'device',
         component: () => import(/* webpackChunkName: "device" */ '@/views/device/index.vue'),
         meta: {
           title: '交换机',
@@ -92,9 +97,11 @@ export const constantRoutes: RouteConfig[] = [
   {
     path: '/logging',
     component: Layout,
+    meta: { hidden: true },
     children: [
       {
         path: 'list',
+        name: 'logging',
         component: () => import(/* webpackChunkName: "logging" */ '@/views/logging/index.vue'),
         meta: {
           title: '接入情况',
@@ -102,14 +109,6 @@ export const constantRoutes: RouteConfig[] = [
         }
       }
     ]
-  },
-  {
-    path: '/logout',
-    component: Layout,
-    meta: {
-      title: '退出',
-      icon: 'link'
-    }
   }
 ]
 
@@ -120,13 +119,16 @@ export const constantRoutes: RouteConfig[] = [
 export const asyncRoutes: RouteConfig[] = [
   {
     path: '/setup',
+    name: 'setup',
     component: Layout,
     meta: {
-      roles: ['admin']
+      roles: ['admin'],
+      hidden: true
     },
     children: [
       {
         path: 'list',
+        name: 'setup',
         component: () => import(/* webpackChunkName: "logging" */ '@/views/setup/index.vue'),
         meta: {
           title: '设置',
@@ -137,16 +139,8 @@ export const asyncRoutes: RouteConfig[] = [
     ]
   },
   {
-    path: '/orther',
-    component: Layout,
-    meta: {
-      title: '其他(不应看到)',
-      icon: 'link',
-      roles: ['other']
-    }
-  },
-  {
     path: '/logout',
+    name: 'logout',
     component: Layout,
     meta: {
       title: '退出',

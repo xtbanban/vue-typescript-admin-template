@@ -59,12 +59,12 @@
         登录
       </el-button>
 
-      <!-- <div style="position:relative">
+      <div style="position:relative">
         <div class="tips">
-          <span> username: admin </span>
-          <span> password: any </span>
+          <el-button type="text" @click="setloginname('admin','radius-2021')">admin</el-button>
+          <el-button type="text" @click="setloginname('editor','editor')">editor</el-button>
         </div>
-      </div> -->
+      </div>
     </el-form>
   </div>
 </template>
@@ -98,8 +98,13 @@ export default class extends Vue {
   }
 
   private loginForm = {
-    username: 'admin',
-    password: 'radius-2021'
+    username: '',
+    password: ''
+  }
+
+  private setloginname(name: string, pwd: string) {
+    this.loginForm.username = name
+    this.loginForm.password = pwd
   }
 
   private loginRules = {
