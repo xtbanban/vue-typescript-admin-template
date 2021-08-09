@@ -137,6 +137,15 @@ export const asyncRoutes: RouteConfig[] = [
     ]
   },
   {
+    path: '/orther',
+    component: Layout,
+    meta: {
+      title: '其他(不应看到)',
+      icon: 'link',
+      roles: ['other']
+    }
+  },
+  {
     path: '/logout',
     component: Layout,
     meta: {
@@ -165,5 +174,11 @@ const createRouter = () => new VueRouter({
 })
 
 const router = createRouter()
+
+// Detail see: https://github.com/vuejs/vue-router/issues/1234#issuecomment-357941465
+export function resetRouter() {
+  const newRouter = createRouter();
+  (router as any).matcher = (newRouter as any).matcher // reset router
+}
 
 export default router
