@@ -15,7 +15,6 @@ export const filterAsyncRoutes = (routes: RouteConfig[], roles: string[]) => {
   const res: RouteConfig[] = []
   routes.forEach(route => {
     const r = { ...route }
-    console.log('r:', r)
     if (hasPermission(roles, r)) {
       if (r.children) {
         r.children = filterAsyncRoutes(r.children, roles)

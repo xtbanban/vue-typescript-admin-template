@@ -35,7 +35,7 @@ router.beforeEach(async(to: Route, _: Route, next: any) => {
           // Generate accessible routes map based on role
           PermissionModule.GenerateRoutes(roles)
           // Dynamically add accessible routes
-          router.addRoutes(PermissionModule.dynamicRoutes)
+          router.addRoutes(PermissionModule.dynamicRoutes) // 此句不起作用？？？
           console.log('roles:', roles, ' typeof', typeof (roles))
           console.log('dynamicRoutes:', PermissionModule.dynamicRoutes)
           // Hack: ensure addRoutes is complete
