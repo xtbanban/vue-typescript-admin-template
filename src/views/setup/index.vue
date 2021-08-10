@@ -1,99 +1,58 @@
 <template>
   <div class="app-container">
+    <el-space wrap size="150">
+    <el-card class="box-card">
     <el-form
-      ref="form"
-      :model="form"
+      :model="adminform"
       label-width="120px"
     >
-      <el-form-item label="Activity name">
-        <el-input v-model="form.name" />
+      <el-form-item>
+        <h2>修改管理员密码</h2>
       </el-form-item>
-      <el-form-item label="Activity zone">
-        <el-select
-          v-model="form.region"
-          placeholder="please select your zone"
-        >
-          <el-option
-            label="Zone one"
-            value="shanghai"
-          />
-          <el-option
-            label="Zone two"
-            value="beijing"
-          />
-        </el-select>
+      <el-form-item label="输入原密码：">
+        <el-input ref="password" v-model="adminform.password" placeholder="请输入原密码" show-password />
       </el-form-item>
-      <el-form-item label="Activity time">
-        <el-col :span="11">
-          <el-date-picker
-            v-model="form.date1"
-            type="date"
-            placeholder="Pick a date"
-            style="width: 100%;"
-          />
-        </el-col>
-        <el-col
-          :span="2"
-          class="line"
-        >
-          -
-        </el-col>
-        <el-col :span="11">
-          <el-time-picker
-            v-model="form.date2"
-            type="fixed-time"
-            placeholder="Pick a time"
-            style="width: 100%;"
-          />
-        </el-col>
+      <el-form-item label="输入新密码：">
+        <el-input ref="password" v-model="adminform.newpassword" placeholder="请输入新密码" show-password />
       </el-form-item>
-      <el-form-item label="Instant delivery">
-        <el-switch v-model="form.delivery" />
-      </el-form-item>
-      <el-form-item label="Activity type">
-        <el-checkbox-group v-model="form.type">
-          <el-checkbox
-            label="Online activities"
-            name="type"
-          />
-          <el-checkbox
-            label="Promotion activities"
-            name="type"
-          />
-          <el-checkbox
-            label="Offline activities"
-            name="type"
-          />
-          <el-checkbox
-            label="Simple brand exposure"
-            name="type"
-          />
-        </el-checkbox-group>
-      </el-form-item>
-      <el-form-item label="Resources">
-        <el-radio-group v-model="form.resource">
-          <el-radio label="Sponsor" />
-          <el-radio label="Venue" />
-        </el-radio-group>
-      </el-form-item>
-      <el-form-item label="Activity form">
-        <el-input
-          v-model="form.desc"
-          type="textarea"
-        />
+      <el-form-item label="再次新密码：">
+        <el-input ref="password" v-model="adminform.newpassword2" placeholder="请再次输入新密码" show-password />
       </el-form-item>
       <el-form-item>
         <el-button
           type="primary"
-          @click="onSubmit"
+          @click="onSubmitadmin"
         >
-          Create
-        </el-button>
-        <el-button @click="onCancel">
-          Cancel
+          确认修改
         </el-button>
       </el-form-item>
     </el-form>
+    </el-card>
+    <el-card class="box-card">
+    <el-form
+      :model="editorform"
+      label-width="120px"
+    >
+      <el-form-item>
+        <h2>修改操作员密码</h2>
+      </el-form-item>
+      <el-form-item label="输入新密码：">
+        <el-input ref="password" v-model="editorform.newpassword" placeholder="请输入新密码" show-password />
+      </el-form-item>
+      <el-form-item label="是否可用：">
+        <el-switch v-model="editorform.status" />
+      </el-form-item>
+      <el-form-item>
+        <el-button
+          type="primary"
+          @click="onSubmiteditor"
+        >
+          确认修改
+        </el-button>
+      </el-form-item>
+    </el-form>
+    </el-card>
+    </el-space>
   </div>
 </template>
 
@@ -101,34 +60,35 @@
 import { Component, Vue } from 'vue-property-decorator'
 
 @Component({
-  name: 'Form'
+  name: 'Setup'
 })
 export default class extends Vue {
-  private form = {
-    name: '',
-    region: '',
-    date1: '',
-    date2: '',
-    delivery: false,
-    type: [],
-    resource: '',
-    desc: ''
+  private passwordType = 'password'
+  private adminform = {
+    password: '',
+    newpassword: '',
+    newpassword2: ''
   };
 
-  private onSubmit() {
-    this.$message('submit!')
+  private editorform = {
+    newpassword: '',
+    status: true
+  };
+
+  private onSubmitadmin() {
+    this.$message('submit!' + this.adminform.password)
   }
 
-  private onCancel() {
-    this.$message({
-      message: 'cancel!',
-      type: 'warning'
-    })
+  private onSubmiteditor() {
+    this.$message('submit!' + this.editorform.newpassword)
   }
 }
 </script>
 
 <style lang="scss" scoped>
+.app-container {
+  width: 55%;
+}
 .line {
   text-align: center;
 }
