@@ -45,7 +45,7 @@ class Permission extends VuexModule implements IPermissionState {
   public GenerateRoutes(roles: string[]) {
     let accessedRoutes
     if (roles.includes('admin')) {
-      accessedRoutes = asyncRoutes
+      accessedRoutes = asyncRoutes // admin 有所有权限
     } else {
       accessedRoutes = filterAsyncRoutes(asyncRoutes, roles)
     }

@@ -7,7 +7,7 @@ import { UserModule } from '@/store/modules/user'
 import { PermissionModule } from '@/store/modules/permission'
 NProgress.configure({ showSpinner: false })
 
-const whiteList = ['/login']
+const whiteList = ['/login', '/logout']
 
 router.beforeEach(async(to: Route, _: Route, next: any) => {
   // Start progress bar
@@ -24,14 +24,14 @@ router.beforeEach(async(to: Route, _: Route, next: any) => {
       resetRouter()
       // If is logout, redirect to the home page
       UserModule.ResetToken()
-      next(`/login`)
+      next('/login')
     } else {
       // Check whether the user has obtained his permission roles
       if (UserModule.roles.length === 0) {
         try {
           // Get user info, including roles
           await UserModule.GetUserInfo()
-          const roles = UserModule.roles
+          const roles: string[] = UserModule.roles
           // Generate accessible routes map based on role
           PermissionModule.GenerateRoutes(roles)
           // Dynamically add accessible routes

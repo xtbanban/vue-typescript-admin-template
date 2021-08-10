@@ -63,7 +63,7 @@
         </el-tooltip>
         <span v-if="!(autoinsert===totaldevice)">
           <el-tooltip effect="dark" content="操作提醒：应等于合计数。" placement="top-start">
-            <i class="el-icon-error"></i>
+            <i class="el-icon-circle-plus"></i>
           </el-tooltip>
         </span>
         <span v-else>
@@ -132,7 +132,7 @@ export default class extends Vue {
   }
 
   private handledoneset() {
-    this.$confirm('此操作未关联的设备全部设置为拒绝接入, 是否继续?', '提示', {
+    this.$confirm('此操作将未关联的设备全部设置为拒绝接入, 是否继续?', '提示', {
       confirmButtonText: '确定',
       cancelButtonText: '取消',
       type: 'warning'

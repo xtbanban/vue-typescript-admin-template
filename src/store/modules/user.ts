@@ -6,8 +6,6 @@ import store from '@/store'
 export interface IUserState {
   token: string
   name: string
-  avatar: string
-  introduction: string
   roles: string[]
 }
 
@@ -15,8 +13,6 @@ export interface IUserState {
 class User extends VuexModule implements IUserState {
   public token = getToken() || ''
   public name = ''
-  public avatar = ''
-  public introduction = ''
   public roles: string[] = []
 
   @Mutation
@@ -27,16 +23,6 @@ class User extends VuexModule implements IUserState {
   @Mutation
   private SET_NAME(name: string) {
     this.name = name
-  }
-
-  @Mutation
-  private SET_AVATAR(avatar: string) {
-    this.avatar = avatar
-  }
-
-  @Mutation
-  private SET_INTRODUCTION(introduction: string) {
-    this.introduction = introduction
   }
 
   @Mutation
@@ -69,15 +55,13 @@ class User extends VuexModule implements IUserState {
     if (!data) {
       throw Error('验证失败，请重新登录。')
     }
-    const { roles, name, avatar, introduction } = data.user
+    const { roles, name } = data.user
     // roles must be a non-empty array
     if (!roles || roles.length <= 0) {
       throw Error('GetUserInfo: roles必须为非空数组!')
     }
     this.SET_ROLES(roles)
     this.SET_NAME(name)
-    this.SET_AVATAR(avatar)
-    this.SET_INTRODUCTION(introduction)
   }
 
   @Action

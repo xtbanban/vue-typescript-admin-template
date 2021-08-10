@@ -114,7 +114,7 @@ export default class extends Vue {
 
   private passwordType = 'password'
   private loading = false
-  private showDialog = false
+  // private showDialog = false
   private redirect?: string
   private otherQuery: Dictionary<string> = {}
 

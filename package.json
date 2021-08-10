@@ -1,8 +1,8 @@
 {
-  "name": "vue-typescript-admin-template",
-  "version": "1.0.0",
+  "name": "adiusserver",
+  "version": "21.8.10",
   "private": true,
-  "author": "Chong Guo <armourcy@gmail.com>",
+  "author": "xtbanban:88185785@qq.com",
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
@@ -22,7 +22,7 @@
     "vue": "^2.6.12",
     "vue-class-component": "^7.2.6",
     "vue-property-decorator": "^9.0.2",
-    "vue-router": "^3.4.8",
+    "vue-router": "^3.5.0",
     "vue-svgicon": "^3.2.9",
     "vuex": "^3.5.1",
     "vuex-module-decorators": "^1.0.1"

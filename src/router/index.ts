@@ -72,7 +72,7 @@ export const constantRoutes: RouteConfig[] = [
         name: 'client',
         component: () => import(/* webpackChunkName: "client" */ '@/views/client/index.vue'),
         meta: {
-          title: '接入设备',
+          title: '设备',
           icon: 'table'
         }
       }
@@ -104,7 +104,7 @@ export const constantRoutes: RouteConfig[] = [
         name: 'logging',
         component: () => import(/* webpackChunkName: "logging" */ '@/views/logging/index.vue'),
         meta: {
-          title: '接入情况',
+          title: '统计',
           icon: 'table'
         }
       }
@@ -129,11 +129,27 @@ export const asyncRoutes: RouteConfig[] = [
       {
         path: 'list',
         name: 'setup',
-        component: () => import(/* webpackChunkName: "logging" */ '@/views/setup/index.vue'),
+        component: () => import(/* webpackChunkName: "setup" */ '@/views/setup/index.vue'),
         meta: {
           title: '设置',
           icon: 'table',
           roles: ['admin']
+        }
+      }
+    ]
+  },
+  {
+    path: '/help',
+    component: Layout,
+    meta: { hidden: true },
+    children: [
+      {
+        path: 'list',
+        name: 'help',
+        component: () => import(/* webpackChunkName: "help" */ '@/views/help/index.vue'),
+        meta: {
+          title: '帮助',
+          icon: 'table'
         }
       }
     ]

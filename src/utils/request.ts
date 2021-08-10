@@ -12,7 +12,7 @@ service.interceptors.request.use(
   (config) => {
     // Add Authorization header to every request, you can add other custom headers here
     if (UserModule.token) {
-      config.headers['Authorization'] = 'Bearer ' + UserModule.token
+      config.headers.Authorization = 'Bearer ' + UserModule.token
     }
     return config
   },
@@ -26,12 +26,7 @@ service.interceptors.response.use(
   (response) => {
     // Some example codes here:
     // code == 20000: success
-    // code == 50001: invalid access token
-    // code == 50002: already login in other place
-    // code == 50003: access token expired
-    // code == 50004: invalid user (user not exist)
-    // code == 50005: username or password is incorrect
-    // You can change this part for your own usage.
+    // code == 50000: invalid access token
     const res = response.data
     if (res.code !== 20000) {
       Message({
@@ -39,7 +34,7 @@ service.interceptors.response.use(
         type: 'error',
         duration: 5 * 1000
       })
-      if (res.code === 50008 || res.code === 50012 || res.code === 50014) {
+      if (res.code === 50000) {
         MessageBox.confirm(
           '已退出系统，请重新登录。',
           '退出',
