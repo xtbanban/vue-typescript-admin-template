@@ -36,6 +36,7 @@ router.beforeEach(async(to: Route, _: Route, next: any) => {
           PermissionModule.GenerateRoutes(roles)
           // Dynamically add accessible routes
           // router.addRoutes(PermissionModule.dynamicRoutes) // router.addRoutes 已废弃：使用 router.addRoute() 代替。
+          resetRouter()
           PermissionModule.dynamicRoutes.forEach(route => {
             router.addRoute(route)
           })

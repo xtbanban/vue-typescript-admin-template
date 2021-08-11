@@ -117,43 +117,111 @@ export const constantRoutes: RouteConfig[] = [
  * the routes that need to be dynamically loaded based on user roles
 */
 export const asyncRoutes: RouteConfig[] = [
+  // {
+  //   path: '/client',
+  //   component: Layout,
+  //   meta: {
+  //     hidden: true
+  //   },
+  //   children: [
+  //     {
+  //       path: 'list',
+  //       name: 'client',
+  //       component: () => import(/* webpackChunkName: "client" */ '@/views/client/index.vue'),
+  //       meta: {
+  //         title: '设备',
+  //         icon: 'table'
+  //       }
+  //     }
+  //   ]
+  // },
+  // {
+  //   path: '/device',
+  //   component: Layout,
+  //   meta: {
+  //     hidden: true
+  //   },
+  //   children: [
+  //     {
+  //       path: 'list',
+  //       name: 'device',
+  //       component: () => import(/* webpackChunkName: "device" */ '@/views/device/index.vue'),
+  //       meta: {
+  //         title: '交换机',
+  //         icon: 'table'
+  //       }
+  //     }
+  //   ]
+  // },
+  // {
+  //   path: '/logging',
+  //   component: Layout,
+  //   meta: {
+  //     hidden: true
+  //   },
+  //   children: [
+  //     {
+  //       path: 'list',
+  //       name: 'logging',
+  //       component: () => import(/* webpackChunkName: "logging" */ '@/views/logging/index.vue'),
+  //       meta: {
+  //         title: '统计',
+  //         icon: 'table'
+  //       }
+  //     }
+  //   ]
+  // },
   {
     path: '/setup',
     name: 'setup',
+    redirect: '/setup/admin',
     component: Layout,
     meta: {
+      title: '设置',
+      icon: 'table',
       roles: ['admin'],
-      hidden: true
+      // alwaysShow: true,
+      hidden: false
     },
     children: [
       {
-        path: 'list',
-        name: 'setup',
-        component: () => import(/* webpackChunkName: "setup" */ '@/views/setup/index.vue'),
+        path: 'admin',
+        name: 'setup-admin',
+        component: () => import(/* webpackChunkName: "setup" */ '@/views/setup/admin.vue'),
         meta: {
-          title: '设置',
+          title: '管理员',
+          icon: 'table',
+          roles: ['admin']
+        }
+      },
+      {
+        path: 'editor',
+        name: 'setup-editor',
+        component: () => import(/* webpackChunkName: "setup" */ '@/views/setup/editor.vue'),
+        meta: {
+          title: '操作员',
           icon: 'table',
           roles: ['admin']
         }
       }
     ]
   },
-  {
-    path: '/help',
-    component: Layout,
-    meta: { hidden: true },
-    children: [
-      {
-        path: 'list',
-        name: 'help',
-        component: () => import(/* webpackChunkName: "help" */ '@/views/help/index.vue'),
-        meta: {
-          title: '帮助',
-          icon: 'table'
-        }
-      }
-    ]
-  },
+  // {
+  //   path: '/help',
+  //   component: Layout,
+  //   meta: { hidden: true },
+  //   children: [
+  //     {
+  //       path: 'list',
+  //       name: 'help',
+  //       component: () => import(/* webpackChunkName: "help" */ '@/views/help/index.vue'),
+  //       meta: {
+  //         title: '帮助',
+  //         icon: 'table'
+  //       }
+  //     }
+  //   ]
+  // },
   {
     path: '/logout',
     name: 'logout',
