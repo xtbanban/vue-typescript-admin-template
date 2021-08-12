@@ -158,7 +158,7 @@
             <el-button
               type="success"
               size="small"
-              @click="confirmEdit(scope.row)"
+               @click.native.prevent="confirmEdit(scope.row)"
             >
               保存
             </el-button>

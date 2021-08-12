@@ -98,7 +98,7 @@ import { getclientdashboard, oneclickset } from '@/api/client'
 import { getdevicedashboard } from '@/api/device'
 
 @Component({
-  name: 'Dashboard'
+  name: 'Main'
 })
 
 export default class extends Vue {

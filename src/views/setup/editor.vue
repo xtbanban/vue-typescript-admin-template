@@ -39,7 +39,7 @@ import { Form as ElForm } from 'element-ui'
 import { update } from '@/api/users'
 
 @Component({
-  name: 'Setup-editor'
+  name: 'SetupEditor'
 })
 export default class extends Vue {
   private editorform = {

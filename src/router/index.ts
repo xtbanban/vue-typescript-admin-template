@@ -48,12 +48,12 @@ export const constantRoutes: RouteConfig[] = [
   {
     path: '/',
     component: Layout,
-    redirect: '/dashboard',
+    redirect: '/main',
     children: [
       {
-        path: 'dashboard',
-        name: 'dashboard',
-        component: () => import(/* webpackChunkName: "dashboard" */ '@/views/dashboard/index.vue'),
+        path: 'main',
+        name: 'Main',
+        component: () => import(/* webpackChunkName: "main" */ '@/views/main/index.vue'),
         meta: {
           title: '首页',
           icon: 'dashboard'
@@ -67,7 +67,7 @@ export const constantRoutes: RouteConfig[] = [
     children: [
       {
         path: 'list',
-        name: 'client',
+        name: 'Client',
         component: () => import(/* webpackChunkName: "client" */ '@/views/client/index.vue'),
         meta: {
           title: '设备',
@@ -82,7 +82,7 @@ export const constantRoutes: RouteConfig[] = [
     children: [
       {
         path: 'list',
-        name: 'device',
+        name: 'Device',
         component: () => import(/* webpackChunkName: "device" */ '@/views/device/index.vue'),
         meta: {
           title: '交换机',
@@ -97,7 +97,7 @@ export const constantRoutes: RouteConfig[] = [
     children: [
       {
         path: 'list',
-        name: 'logging',
+        name: 'Logging',
         component: () => import(/* webpackChunkName: "logging" */ '@/views/logging/index.vue'),
         meta: {
           title: '统计',
@@ -124,7 +124,7 @@ export const asyncRoutes: RouteConfig[] = [
     children: [
       {
         path: 'admin',
-        name: 'setup-admin',
+        name: 'SetupAdmin',
         component: () => import(/* webpackChunkName: "setup" */ '@/views/setup/admin.vue'),
         meta: {
           title: '管理员',
@@ -134,7 +134,7 @@ export const asyncRoutes: RouteConfig[] = [
       },
       {
         path: 'editor',
-        name: 'setup-editor',
+        name: 'SetupEditor',
         component: () => import(/* webpackChunkName: "setup" */ '@/views/setup/editor.vue'),
         meta: {
           title: '操作员',
@@ -144,22 +144,6 @@ export const asyncRoutes: RouteConfig[] = [
       }
     ]
   },
-  // {
-  //   path: '/help',
-  //   component: Layout,
-  //   meta: { hidden: true },
-  //   children: [
-  //     {
-  //       path: 'list',
-  //       name: 'help',
-  //       component: () => import(/* webpackChunkName: "help" */ '@/views/help/index.vue'),
-  //       meta: {
-  //         title: '帮助',
-  //         icon: 'table'
-  //       }
-  //     }
-  //   ]
-  // },
   {
     path: '/logout',
     component: Layout,

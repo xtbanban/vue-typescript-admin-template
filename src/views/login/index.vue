@@ -70,9 +70,7 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue, Watch } from 'vue-property-decorator'
-import { Route } from 'vue-router'
-import { Dictionary } from 'vue-router/types/router'
+import { Component, Vue } from 'vue-property-decorator'
 import { Form as ElForm, Input } from 'element-ui'
 import { UserModule } from '@/store/modules/user'
 import { isValidUsername } from '@/utils/validate'
@@ -114,28 +112,6 @@ export default class extends Vue {
 
   private passwordType = 'password'
   private loading = false
-  // private showDialog = false
-  private redirect?: string
-  private otherQuery: Dictionary<string> = {}
-
-  @Watch('$route', { immediate: true })
-  private onRouteChange(route: Route) {
-    // TODO: remove the "as Dictionary<string>" hack after v4 release for vue-router
-    // See https://github.com/vuejs/vue-router/pull/2050 for details
-    const query = route.query as Dictionary<string>
-    if (query) {
-      this.redirect = query.redirect
-      this.otherQuery = this.getOtherQuery(query)
-    }
-  }
-
-  mounted() {
-    if (this.loginForm.username === '') {
-      (this.$refs.username as Input).focus()
-    } else if (this.loginForm.password === '') {
-      (this.$refs.password as Input).focus()
-    }
-  }
 
   private showPwd() {
     if (this.passwordType === 'password') {
@@ -158,22 +134,12 @@ export default class extends Vue {
         }, 0.5 * 1000)
         await UserModule.Login(this.loginForm)
         this.$router.push({
-          path: this.redirect || '/',
-          query: this.otherQuery
+          path: '/'
         })
       } else {
         return false
       }
     })
-  }
-
-  private getOtherQuery(query: Dictionary<string>) {
-    return Object.keys(query).reduce((acc, cur) => {
-      if (cur !== 'redirect') {
-        acc[cur] = query[cur]
-      }
-      return acc
-    }, {} as Dictionary<string>)
   }
 }
 </script>

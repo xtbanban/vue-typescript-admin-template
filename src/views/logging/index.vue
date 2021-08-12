@@ -200,8 +200,6 @@ export default class extends Vue {
     if (!(this.$route.query.Login == undefined)) {
       this.clientvalue = String(this.$route.query.Login) // 从接入设备页面进来，根据参数Login自动绑定选择框
     }
-    // console.log( this.$route.path) // =/logging/list/ （todo：选中本路由菜单）
-    // console.log(Sidebar)
   }
 
   private async getclient() {
