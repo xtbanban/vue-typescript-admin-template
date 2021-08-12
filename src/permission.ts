@@ -70,7 +70,6 @@ router.beforeEach(async(to: Route, _: Route, next: any) => {
 router.afterEach((to: Route) => {
   // Finish progress bar
   NProgress.done()
-
   // set page title
   if (to.meta.title == undefined) {
     document.title = 'RadiusServer'

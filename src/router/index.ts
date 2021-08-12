@@ -123,6 +123,16 @@ export const asyncRoutes: RouteConfig[] = [
     },
     children: [
       {
+        path: 'onekey',
+        name: 'Setuponekey',
+        component: () => import(/* webpackChunkName: "setup" */ '@/views/setup/onekey.vue'),
+        meta: {
+          title: '操作',
+          icon: 'table',
+          roles: ['admin']
+        }
+      },
+      {
         path: 'admin',
         name: 'SetupAdmin',
         component: () => import(/* webpackChunkName: "setup" */ '@/views/setup/admin.vue'),

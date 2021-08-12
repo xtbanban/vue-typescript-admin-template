@@ -39,7 +39,7 @@
             <span class="number number4">{{noset}}</span>
           </el-tooltip>
           <el-tooltip effect="dark" content="将所有未关联真实名称的接入设备设置为拒绝接入，以满足安全需求。" placement="top-start">
-            <el-button class="button" type="primary" @click="handledoneset" :disabled="!noset">一键设置</el-button>
+            <el-button class="button" type="primary" @click="handledoneset" :disabled="!noset">全部拒绝</el-button>
           </el-tooltip>
         </div>
       </el-card>
@@ -146,7 +146,7 @@ export default class extends Vue {
     this.getclientList()
     this.getdeviceList()
     this.$message({
-      message: '一键设置完成。',
+      message: '所选操作完成。(全部拒绝)',
       type: 'success'
     })
   }

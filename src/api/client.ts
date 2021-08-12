@@ -39,3 +39,9 @@ export const oneclickset = () =>
     url: '/client/oneclickset',
     method: 'post'
   })
+
+export const oneclickdel = () =>
+  request({
+    url: '/client/oneclickdel',
+    method: 'post'
+  })
