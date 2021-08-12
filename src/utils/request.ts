@@ -34,9 +34,9 @@ service.interceptors.response.use(
         type: 'error',
         duration: 5 * 1000
       })
-      if (res.code === 50000) {
+      if (res.code === 50100) {
         MessageBox.confirm(
-          '已退出系统，请重新登录。',
+          '系统错误，需要重新登录。',
           '退出',
           {
             confirmButtonText: '登录',

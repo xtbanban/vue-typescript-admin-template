@@ -1,8 +1,8 @@
 <template>
   <div class="app-container">
     <el-form
-        v-show="hasrole"
         ref="addForm"
+        v-show="hasrole"
         :inline="true"
         :model="formInline"
         class="demo-form-inline"

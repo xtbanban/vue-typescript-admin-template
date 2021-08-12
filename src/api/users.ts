@@ -19,3 +19,10 @@ export const logout = () =>
     url: '/users/logout',
     method: 'post'
   })
+
+export const update = (data: any) =>
+  request({
+    url: '/users/update',
+    method: 'post',
+    data
+  })

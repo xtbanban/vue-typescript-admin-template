@@ -217,7 +217,7 @@ export default class extends Vue {
         await addclient(this.formInline)
         this.getList()
         this.$message({
-          message: '成功增加接入用户。',
+          message: '成功增加接入设备。',
           type: 'success'
         })
       }
