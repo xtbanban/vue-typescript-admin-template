@@ -28,20 +28,17 @@ export const filterAsyncRoutes = (routes: RouteConfig[], roles: string[]) => {
 export interface IPermissionState {
   routes: RouteConfig[]
   dynamicRoutes: RouteConfig[]
-  originRoutes: RouteConfig[] // 保存原来的的固定路由
 }
 
 @Module({ dynamic: true, store, name: 'permission' })
 class Permission extends VuexModule implements IPermissionState {
   public routes: RouteConfig[] = []
   public dynamicRoutes: RouteConfig[] = []
-  public originRoutes: RouteConfig[] = [] // 保存原来的的固定路由
 
   @Mutation
   private SET_ROUTES(routes: RouteConfig[]) {
     this.routes = constantRoutes.concat(routes)
     this.dynamicRoutes = routes
-    this.originRoutes = constantRoutes // 保存原来的的固定路由
   }
 
   @Action

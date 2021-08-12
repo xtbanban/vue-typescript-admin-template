@@ -175,7 +175,7 @@ import { Component, Vue } from 'vue-property-decorator'
 import { Form } from 'element-ui'
 import { getclient, addclient, updateclient, deleteclient } from '@/api/client'
 import { IClientData } from '@/api/types'
-import { UserModule } from '@/store/modules/user'
+import { checkPermission } from '@/utils/permission'
 
 @Component({
   name: 'Client'
@@ -194,7 +194,7 @@ export default class extends Vue {
 
   get hasrole() {
     // 是否有此权限
-    return UserModule.roles.indexOf('admin') > -1
+    return checkPermission(['admin'])
   }
 
   private rules = {

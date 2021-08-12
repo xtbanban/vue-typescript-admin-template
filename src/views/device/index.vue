@@ -208,7 +208,7 @@ import { Component, Vue } from 'vue-property-decorator'
 import { Form } from 'element-ui'
 import { getdevice, adddevice, updatedevice, deletedevice } from '@/api/device'
 import { IDeviceData } from '@/api/types'
-import { UserModule } from '@/store/modules/user'
+import { checkPermission } from '@/utils/permission'
 
 @Component({
   name: 'Device'
@@ -227,7 +227,7 @@ export default class extends Vue {
 
   get hasrole() {
     // 是否有此权限
-    return UserModule.roles.indexOf('admin') > -1
+    return checkPermission(['admin'])
   }
 
   private rules = {

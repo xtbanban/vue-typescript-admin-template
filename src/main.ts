@@ -10,7 +10,6 @@ import '@/styles/index.scss'
 import App from '@/App.vue'
 import store from '@/store'
 import router from '@/router'
-// import router from './router'
 import '@/icons/components'
 import '@/permission'
 

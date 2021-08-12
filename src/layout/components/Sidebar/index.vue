@@ -26,7 +26,6 @@ import { Component, Vue } from 'vue-property-decorator'
 import { AppModule } from '@/store/modules/app'
 import SidebarItem from './SidebarItem.vue'
 import variables from '@/styles/_variables.scss'
-import { constantRoutes } from '@/router'
 import { PermissionModule } from '@/store/modules/permission'
 
 @Component({
@@ -41,16 +40,8 @@ export default class extends Vue {
   }
 
   get routes() {
-    // return (this.$router as any).options.routes // 已经不能取得动态增加后的路由，应由 getRoutes() 方法取得
-    console.log('constantRoutes:', constantRoutes)
-    const dynamicRoutes = (PermissionModule.dynamicRoutes)
-    console.log('dynamicRoutes:', dynamicRoutes)
-    const allroute = constantRoutes.concat(dynamicRoutes)
-    console.log('allroute:', allroute)
-    //
-    return (this.$router as any).getRoutes()
-    // return (this.$router as any).options.routes
-    // return allroute
+    // return (this.$router as any).options.routes // 已经不能取得动态增加后的路由
+    return PermissionModule.routes
   }
 
   get variables() {
