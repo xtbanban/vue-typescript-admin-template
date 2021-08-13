@@ -1,6 +1,6 @@
 {
-  "name": "adiusserver",
-  "version": "21.8.10",
+  "name": "radiusserver",
+  "version": "21.8.13",
   "private": true,
   "author": "xtbanban:88185785@qq.com",
   "scripts": {

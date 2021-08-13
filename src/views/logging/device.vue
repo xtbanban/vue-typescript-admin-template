@@ -4,14 +4,14 @@
       <span class="my_label">选择需要显示的</span>
       <el-tooltip class="item" effect="dark" content="分<名称><IP地址>两列排序显示所有交换机" placement="top-start">
         <el-select
-        v-model="clientvalue" placeholder="交换机" @change="handleChange">
+        v-model="devicevalue" placeholder="交换机" @change="handleChange">
         <el-option
           v-for="item in devicelist"
-          :key="item.Login"
-          :label="item.UserName"
-          :value="item.Login">
-          <span style="float: left">{{ item.UserName }}</span>
-          <span style="float: right; color: #8492a6; font-size: 13px">{{ item.Login }}</span>
+          :key="item.IP"
+          :label="item.name"
+          :value="item.IP">
+          <span style="float: left">{{ item.name }}</span>
+          <span style="float: right; color: #8492a6; font-size: 13px">{{ item.IP }}</span>
         </el-option>
         </el-select>
       </el-tooltip>
@@ -27,15 +27,15 @@
       </el-date-picker>
       </el-tooltip>
       <el-divider direction="vertical"></el-divider>
-      <el-tooltip class="item" effect="dark" content="显示全部或精简数据（精简只包括：<开始><结束>，不统计数据包）" placement="top-start">
-      <el-switch
-        v-model="showsingle"
-        active-color="#13ce66"
-        inactive-color="#ff4949"
-        active-text="精简"
-        inactive-text="全部"
-        @change="handleChange">
-      </el-switch>
+      <el-tooltip class="item" effect="dark" content="选择需要过滤显示的动作类型" placement="top-start">
+      <el-select v-model="statustype" placeholder="请选择">
+        <el-option key="all" label="全部" value=""></el-option>
+        <el-option key="+" label="允许接入（Access-Accept）" value="+"></el-option>
+        <el-option key="-" label="拒绝接入（Access-Reject）" value="-"></el-option>
+        <el-option key="Start" label="接入开始（Start）" value="Start"></el-option>
+        <el-option key="Stop" label="接入结束（Stop）" value="Stop"></el-option>
+        <el-option key="Interim-Update" label="定期计费（Interim-Update）" value="Interim-Update"></el-option>
+      </el-select>
       </el-tooltip>
       <el-divider direction="vertical"></el-divider>
       <el-button
@@ -111,7 +111,7 @@
         </template>
       </el-table-column>
         <el-table-column
-          v-if="!showsingle"
+          v-if="showpacket"
           label="接收包"
           width="120"
           align="center"
@@ -121,7 +121,7 @@
           </template>
         </el-table-column>
         <el-table-column
-        v-if="!showsingle"
+        v-if="showpacket"
           label="发送包"
           width="120"
           align="center"
@@ -189,6 +189,7 @@ import { myFormatTime } from '@/utils/validate'
   }
 })
 export default class extends Vue {
+  private showpacket = false // 是否显示包信息
   private list: ILoggingData[] = []
   private devicelist: IDeviceListData[] = []
   private devicevalue = ''
@@ -199,7 +200,7 @@ export default class extends Vue {
   private now = new Date()
   private valuemonth = new Date(this.now.getFullYear(), this.now.getMonth(), 1, 0, 0, 0) // 当前月
   private valuenextmonth = new Date()
-  private showsingle = true
+  private statustype = 'Start' // 默认显示开始
   private listQuery = {
     page: this.currentpage,
     limit: this.pagesize
@@ -207,7 +208,7 @@ export default class extends Vue {
 
   created() {
     this.getdevice()
-    if (!(this.$route.query.Login == undefined)) {
+    if (!(this.$route.query.IP == undefined)) {
       this.devicevalue = String(this.$route.query.IP) // 从交换机页面进来，根据参数IP自动绑定选择框
     }
   }
@@ -225,6 +226,7 @@ export default class extends Vue {
   }
 
   private handleShow() {
+    this.showpacket = this.statustype === '' || this.statustype === 'Interim-Update'
     if (!this.valuemonth) {
       this.valuemonth = new Date(this.now.getFullYear(), this.now.getMonth(), 1, 0, 0, 0) // 当前月
     }
@@ -247,7 +249,7 @@ export default class extends Vue {
         IP: this.devicevalue,
         valuemonth: this.valuemonth,
         valuenextmonth: this.valuenextmonth,
-        showsingle: this.showsingle
+        status_type: this.statustype
       }
     )
     this.list = data.items

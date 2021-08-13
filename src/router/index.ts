@@ -94,13 +94,26 @@ export const constantRoutes: RouteConfig[] = [
   {
     path: '/logging',
     component: Layout,
+    meta: {
+      title: '统计',
+      icon: 'table'
+    },
     children: [
       {
-        path: 'list',
-        name: 'Logging',
-        component: () => import(/* webpackChunkName: "logging" */ '@/views/logging/index.vue'),
+        path: 'client',
+        name: 'LoggingClient',
+        component: () => import(/* webpackChunkName: "logging" */ '@/views/logging/client.vue'),
         meta: {
-          title: '统计',
+          title: '按设备',
+          icon: 'table'
+        }
+      },
+      {
+        path: 'device',
+        name: 'LoggingDevice',
+        component: () => import(/* webpackChunkName: "logging" */ '@/views/logging/device.vue'),
+        meta: {
+          title: '按交换机',
           icon: 'table'
         }
       }
@@ -124,10 +137,10 @@ export const asyncRoutes: RouteConfig[] = [
     children: [
       {
         path: 'onekey',
-        name: 'Setuponekey',
+        name: 'SetupOnekey',
         component: () => import(/* webpackChunkName: "setup" */ '@/views/setup/onekey.vue'),
         meta: {
-          title: '操作',
+          title: '一键操作',
           icon: 'table',
           roles: ['admin']
         }

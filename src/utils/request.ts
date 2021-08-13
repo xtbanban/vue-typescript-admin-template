@@ -34,7 +34,7 @@ service.interceptors.response.use(
         type: 'error',
         duration: 5 * 1000
       })
-      if (res.code === 50100) {
+      if (res.code === 50100) { // token 错误的，转到这里
         MessageBox.confirm(
           '系统错误，需要重新登录。',
           '退出',

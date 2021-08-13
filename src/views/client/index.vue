@@ -9,7 +9,7 @@
       >
       <el-form-item label="接入设备" prop="Login">
        <el-tooltip class="item" effect="dark" content="12位十六进制数字，小写字母，无分隔符，如：c40938f6d1c6" placement="top-start">
-        <el-input v-model="formInline.Login" placeholder="接入设备MAC地址"></el-input>
+        <el-input v-model="formInline.Login" placeholder="MAC地址"></el-input>
        </el-tooltip>
       </el-form-item>
       <el-form-item label="接入密码" prop="Password">
@@ -59,7 +59,7 @@
         align="center"
       >
         <template slot-scope="scope">
-          <el-link :underline="false" :href="'/logging/list/?Login=' + scope.row.Login">{{ scope.row.Login }}</el-link>
+          <el-link :underline="false" :href="'/logging/client/?Login=' + scope.row.Login">{{ scope.row.Login }}</el-link>
         </template>
       </el-table-column>
       <el-table-column

@@ -66,7 +66,7 @@
         align="center"
       >
         <template slot-scope="scope">
-          {{ scope.row.IP }}
+          <el-link :underline="false" :href="'/logging/device/?IP=' + scope.row.IP">{{ scope.row.IP }}</el-link>
         </template>
       </el-table-column>
       <el-table-column

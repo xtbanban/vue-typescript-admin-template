@@ -20,7 +20,7 @@ import { Component, Vue } from 'vue-property-decorator'
 import { oneclickset, oneclickdel } from '@/api/client'
 
 @Component({
-  name: 'Setuponekey'
+  name: 'SetupOnekey'
 })
 export default class extends Vue {
   private handledaject() {

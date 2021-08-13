@@ -111,7 +111,7 @@
         </template>
       </el-table-column>
         <el-table-column
-          v-if="!showsingle"
+          v-if="showpacket"
           label="接收包"
           width="120"
           align="center"
@@ -121,7 +121,7 @@
           </template>
         </el-table-column>
         <el-table-column
-        v-if="!showsingle"
+        v-if="showpacket"
           label="发送包"
           width="120"
           align="center"
@@ -189,6 +189,7 @@ import { myFormatTime } from '@/utils/validate'
   }
 })
 export default class extends Vue {
+  private showpacket = false // 是否显示包信息
   private list: ILoggingData[] = []
   private clientlist: IClientListData[] = []
   private clientvalue = ''
@@ -225,6 +226,7 @@ export default class extends Vue {
   }
 
   private handleShow() {
+    this.showpacket = !this.showsingle
     if (!this.valuemonth) {
       this.valuemonth = new Date(this.now.getFullYear(), this.now.getMonth(), 1, 0, 0, 0) // 当前月
     }
