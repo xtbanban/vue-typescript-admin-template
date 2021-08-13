@@ -6,6 +6,8 @@ export interface ILoggingData {
   resp_code: string
   status_type: string
   logtime: Date
+  AcctInputPackets: number
+  AcctOutputPackets: number
 }
 
 export interface IClientData {
@@ -31,4 +33,10 @@ export interface IDeviceData {
   AutoAccept: boolean
   name: string
   group: string
+}
+
+export interface IDeviceListData {
+  _id: string
+  IP: string
+  name: string
 }

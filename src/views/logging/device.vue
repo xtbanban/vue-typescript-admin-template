@@ -2,11 +2,11 @@
   <div class="app-container">
     <div class="filter-container">
       <span class="my_label">选择需要显示的</span>
-      <el-tooltip class="item" effect="dark" content="分<关联用户><接入设备>两列排序显示所有接入设备" placement="top-start">
+      <el-tooltip class="item" effect="dark" content="分<名称><IP地址>两列排序显示所有交换机" placement="top-start">
         <el-select
-        v-model="clientvalue" placeholder="接入设备" @change="handleChange">
+        v-model="clientvalue" placeholder="交换机" @change="handleChange">
         <el-option
-          v-for="item in clientlist"
+          v-for="item in devicelist"
           :key="item.Login"
           :label="item.UserName"
           :value="item.Login">
@@ -168,8 +168,8 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
-import { getLogging, getclientlist } from '@/api/logging'
-import { ILoggingData, IClientListData } from '@/api/types'
+import { getLogging, getdevicetlist } from '@/api/logging'
+import { ILoggingData, IDeviceListData } from '@/api/types'
 import { myFormatTime } from '@/utils/validate'
 
 @Component({
@@ -190,8 +190,8 @@ import { myFormatTime } from '@/utils/validate'
 })
 export default class extends Vue {
   private list: ILoggingData[] = []
-  private clientlist: IClientListData[] = []
-  private clientvalue = ''
+  private devicelist: IDeviceListData[] = []
+  private devicevalue = ''
   private pagesize = 20
   private currentpage = 1
   private total = 0
@@ -206,16 +206,16 @@ export default class extends Vue {
   }
 
   created() {
-    this.getclient()
+    this.getdevice()
     if (!(this.$route.query.Login == undefined)) {
-      this.clientvalue = String(this.$route.query.Login) // 从接入设备页面进来，根据参数Login自动绑定选择框
+      this.devicevalue = String(this.$route.query.IP) // 从交换机页面进来，根据参数IP自动绑定选择框
     }
   }
 
-  private async getclient() {
+  private async getdevice() {
     this.listLoading = true
-    const { data } = await getclientlist()
-    this.clientlist = data.items
+    const { data } = await getdevicetlist()
+    this.devicelist = data.items
     this.listLoading = false
   }
 
@@ -244,7 +244,7 @@ export default class extends Vue {
     const { data } = await getLogging(
       this.listQuery,
       {
-        Login: this.clientvalue,
+        IP: this.devicevalue,
         valuemonth: this.valuemonth,
         valuenextmonth: this.valuenextmonth,
         showsingle: this.showsingle

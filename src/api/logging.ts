@@ -13,3 +13,9 @@ export const getclientlist = () =>
     url: '/logging/client',
     method: 'post'
   })
+
+export const getdevicetlist = () =>
+request({
+  url: '/logging/device',
+  method: 'post'
+})
