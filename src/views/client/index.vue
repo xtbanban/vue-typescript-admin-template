@@ -256,6 +256,7 @@ export default class extends Vue {
     this.list = items.map((v: any) => {
       this.$set(v, 'edit', false)
       v.originalUserName = v.UserName
+      v.originalStatus = v.status
       return v
     })
     this.total = data.total
@@ -267,15 +268,43 @@ export default class extends Vue {
 
   private cancelEdit(row: any) {
     row.UserName = row.originalUserName
+    row.status = row.originalStatus
     row.edit = false
   }
 
   private async confirmEdit(row: any) {
-    row.edit = false
-    row.originalUserName = row.UserName
     const Login = row.Login
     const UserName = row.UserName
     const status = row.status
+    // 没有关联用户的，不允许接入
+    if (!UserName && status) {
+      this.$prompt('接入设备必须关联用户，请输入用户名。', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        inputPattern: /\S/, // 不能为空字符串
+        inputErrorMessage: '用户名称不能为空'
+      }).then(({ value }) => {
+        row.edit = false
+        row.originalUserName = row.UserName
+        row.originalStatus = row.status
+        row.UserName = value
+        this.handleupdateclient(Login, value, status)
+      }).catch(() => {
+        row.status = false
+        this.$message({
+          type: 'info',
+          message: '不关联用户不能接入'
+        })
+      })
+    } else {
+      row.edit = false
+      row.originalUserName = row.UserName
+      row.originalStatus = row.status
+      this.handleupdateclient(Login, UserName, status)
+    }
+  }
+
+  private async handleupdateclient(Login: string, UserName : string, status : boolean) {
     await updateclient({ Login, UserName, status })
     this.$message({
       message: '用户信息已保存。',
